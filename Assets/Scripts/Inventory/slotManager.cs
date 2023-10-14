@@ -12,8 +12,11 @@ public class SlotManager : MonoBehaviour
 
     private GameObject[] lockObjects; // Array to store instantiated lock objects
 
+
+
     void Start()
     {
+
         // Initialize the isLocked array based on your logic
         // For example, set all slots to locked initially
         isLocked = new bool[slots.Length];
@@ -38,6 +41,7 @@ public class SlotManager : MonoBehaviour
 
         // Call a function to update the slot colors
         UpdateSlotColors();
+
     }
 
     void UpdateSlotColors()
@@ -69,6 +73,22 @@ public class SlotManager : MonoBehaviour
             UpdateSlotColors();
             // Disable the lock object when the slot is unlocked
             lockObjects[slotIndex].SetActive(false);
+        }
+    }
+
+    public void AddItemToSlot(GameObject itemObject)
+    {
+        for (int i = 0; i < slots.Length;i++)
+        {
+            if (!isLocked[i])
+            {
+                SpriteRenderer slotRenderer = slots[i].GetComponent<SpriteRenderer>();
+                Sprite itemSprite = itemObject.GetComponent<SpriteRenderer>().sprite;
+                slotRenderer.sprite = itemSprite;
+
+                break;
+
+            }
         }
     }
 }
