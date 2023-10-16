@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class InventoryManager : MonoBehaviour
@@ -9,21 +7,27 @@ public class InventoryManager : MonoBehaviour
 
     private void Awake()
     {
-        if(Instance == null)
-        { Instance = this; }else
+        if (Instance == null)
+        {
+            Instance = this;
+            DontDestroyOnLoad(transform.root.gameObject);
+            Debug.Log("InventoryManager Awake: " + gameObject.scene.name);
+        }
+        else
         {
             Destroy(gameObject);
         }
-
     }
+
     private void Start()
     {
+        Debug.Log("InventoryManager Start: " + gameObject.scene.name);
         slots = GetComponentsInChildren<Slot>();
     }
 
     public void AddItem(Item item)
     {
-        for(int i=0; i<slots.Length; i++)
+        for (int i = 0; i < slots.Length; i++)
         {
             if (slots[i].ItemInSlot == null)
             {
