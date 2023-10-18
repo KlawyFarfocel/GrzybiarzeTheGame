@@ -7,6 +7,7 @@ public class Item : ScriptableObject
     public int ID;
     public string Name;
     public Sprite Sprite;
+    public int Value;
 
     public GameObject prefab;
 }

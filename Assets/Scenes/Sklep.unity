@@ -377,9 +377,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 102900000, guid: cf98f01c66094f54fbd61af598891452, type: 3}
+      - m_Target: {fileID: 451754382}
         m_TargetAssemblyTypeName: changeScene, Assembly-CSharp
-        m_MethodName: 
+        m_MethodName: moveToNextScene
         m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1354,7 +1354,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -470.85}
+  m_AnchoredPosition: {x: 0, y: -470.84998}
   m_SizeDelta: {x: 0, y: 259.7}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1547915359

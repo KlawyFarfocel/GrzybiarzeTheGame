@@ -15,4 +15,5 @@ MonoBehaviour:
   ID: 1
   Name: "Ma\u015Blak babka"
   Sprite: {fileID: 21300000, guid: 6356f3f45322fdd4280827ed2870ed39, type: 3}
+  Value: 40
   prefab: {fileID: 8759457125546254308, guid: 58f8b72d38323bc4b88aec25d911a7ed, type: 3}
