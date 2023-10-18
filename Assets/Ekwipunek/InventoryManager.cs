@@ -4,19 +4,18 @@ using UnityEngine;
 public class InventoryManager : MonoBehaviour
 {
     public static InventoryManager Instance;
+    public bool isNeededToStay=false;
     public Slot[] slots;
 
     private void Awake()
     {
         if (Instance == null)
         {
-            Instance = this;
-            DontDestroyOnLoad(transform.root.gameObject);
-            Debug.Log("InventoryManager Awake: " + gameObject.scene.name);
-        }
-        else
-        {
-            Destroy(gameObject);
+            if(isNeededToStay)
+            {
+                Instance = this;
+                DontDestroyOnLoad(transform.root.gameObject);
+            }
         }
     }
     public void ForceValueEvaluation()

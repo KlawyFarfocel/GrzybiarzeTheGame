@@ -3062,6 +3062,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f730a3613e260b74e96ced3ea2bbb0ce, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isNeededToStay: 1
   slots: []
 --- !u!114 &1854961714
 MonoBehaviour:

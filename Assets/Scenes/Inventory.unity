@@ -939,6 +939,9 @@ GameObject:
   - component: {fileID: 900043912}
   - component: {fileID: 900043914}
   - component: {fileID: 900043913}
+  - component: {fileID: 900043917}
+  - component: {fileID: 900043916}
+  - component: {fileID: 900043915}
   m_Layer: 5
   m_Name: Image
   m_TagString: Untagged
@@ -1005,6 +1008,92 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 900043911}
   m_CullTransparentMesh: 1
+--- !u!114 &900043915
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 900043911}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 935e6dd4aaac89141be3f0d67ed90f01, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &900043916
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 900043911}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Delegates:
+  - eventID: 2
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 900043915}
+          m_TargetAssemblyTypeName: changeScene, Assembly-CSharp
+          m_MethodName: moveToNextScene
+          m_Mode: 3
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 4
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+--- !u!61 &900043917
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 900043911}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1}
+  m_EdgeRadius: 0
 --- !u!1 &917247324
 GameObject:
   m_ObjectHideFlags: 0
@@ -1043,8 +1132,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 33.899994, y: 380}
-  m_SizeDelta: {x: -67.8, y: -2024.1}
+  m_AnchoredPosition: {x: 0, y: 380}
+  m_SizeDelta: {x: 0, y: -2024.1}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &917247326
 MonoBehaviour:
@@ -1066,8 +1155,8 @@ MonoBehaviour:
   m_ChildAlignment: 4
   rows: 1
   columns: 1
-  cellSize: {x: 962.2, y: 346.69983}
-  spacing: {x: 25, y: 0}
+  cellSize: {x: 980, y: 346.69983}
+  spacing: {x: 50, y: 0}
   fitType: 1
   fitX: 1
   fitY: 1
@@ -1633,8 +1722,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 33.700012, y: 792.2}
-  m_SizeDelta: {x: -68.1, y: -1955.4}
+  m_AnchoredPosition: {x: 0, y: 792.2}
+  m_SizeDelta: {x: 0, y: -1955.4}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1437187243
 MonoBehaviour:
@@ -1656,8 +1745,8 @@ MonoBehaviour:
   m_ChildAlignment: 4
   rows: 1
   columns: 2
-  cellSize: {x: 455.95, y: 415.39978}
-  spacing: {x: 50, y: 0}
+  cellSize: {x: 440, y: 415.39978}
+  spacing: {x: 100, y: 0}
   fitType: 1
   fitX: 1
   fitY: 1
