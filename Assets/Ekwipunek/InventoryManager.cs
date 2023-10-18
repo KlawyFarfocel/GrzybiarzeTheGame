@@ -36,7 +36,6 @@ public class InventoryManager : MonoBehaviour
     {
         Debug.Log("InventoryManager Start: " + gameObject.scene.name);
         slots = GetComponentsInChildren<Slot>();
-        ForceValueEvaluation();
     }
 
     public void AddItem(Item item)
