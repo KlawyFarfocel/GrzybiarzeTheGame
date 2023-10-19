@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0bf317f231578a4ca77a054552b288a, type: 3}
+  m_Name: Item2
+  m_EditorClassIdentifier: 
+  ID: 4
+  Name: Kask
+  Sprite: {fileID: 21300000, guid: 6088a9e4d4a85214fab939dc71cb96bc, type: 3}
+  Value: 0
+  prefab: {fileID: 4911495890626859432, guid: 0aa8bde7178544249b6a5bb26a45577a, type: 3}
