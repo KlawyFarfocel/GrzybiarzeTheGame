@@ -20,7 +20,7 @@ public class InventoryManager : MonoBehaviour
     }
     public void ForceValueEvaluation()
     {
-        Debug.Log("Odpalam sie");
+        Debug.Log("ForceValueEvaluation - Odpalam sie");
         int val = 0;
         for (int i = 0; i < slots.Length; i++)
         {
