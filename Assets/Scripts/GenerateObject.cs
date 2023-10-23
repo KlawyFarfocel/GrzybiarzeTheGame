@@ -10,10 +10,10 @@ public class GenerateObject : MonoBehaviour
     public Item[] Muhsrooms;
     //public GameObject[] Mushrooms;
     private Vector2 position;
-    private float SpawnChance = 0.90f;
     private float MinX, MaxX, MinY, MaxY;
     private int clickCount = 0;
     private GameObject activeMushroom;
+    private bool isMushroomSpawned = false;
 
     void Start()
     {
@@ -44,14 +44,25 @@ public class GenerateObject : MonoBehaviour
 
     private void TrySpawnObject()
     {
-        float randomValue = Random.Range(0f, 1f);
-        if (randomValue < SpawnChance)
+
+        if (!isMushroomSpawned)
         {
-            int RandomIndex = Random.Range(0, Muhsrooms.Length); // losowy indeks grzyba
-            SpawnObject(Muhsrooms[RandomIndex]); 
+            float randomValue = Random.Range(0f, 1f);
+            float AllRespChance = 0f;
+
+            foreach (Item item in Muhsrooms)
+            {
+                AllRespChance += item.RespChange / 100f;
+                if (randomValue < AllRespChance)
+                {
+                    int RandomIndex = Random.Range(0, Muhsrooms.Length); // losowy indeks grzyba
+                    SpawnObject(Muhsrooms[RandomIndex]);
+                    isMushroomSpawned = true;
+                    break;
+                }
+            }
         }
     }
-
     void Update()
     {
         if (Input.GetMouseButtonDown(0))
@@ -65,17 +76,18 @@ public class GenerateObject : MonoBehaviour
 
             if (hit.collider != null && hit.collider.gameObject == activeMushroom)
             {
-                Debug.Log("Score: " + 1);
-                activeMushroom.SetActive(false);
-                //Destroy(activeMushroom);
+                //activeMushroom.SetActive(false);  
+                isMushroomSpawned = false;
+                Destroy(activeMushroom);
                 TrySpawnObject();
 
             }
             else if (activeMushroom != null && clickCount >= 2)
             {
 
-               activeMushroom.SetActive(false);
-               // Destroy(activeMushroom);
+                //activeMushroom.SetActive(false);
+                isMushroomSpawned = false;
+                 Destroy(activeMushroom);
                 clickCount = 0;
             }
             else

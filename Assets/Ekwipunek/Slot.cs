@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
+using UnityEditor.Tilemaps;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -16,7 +17,13 @@ public class Slot : MonoBehaviour
     public Text ItemName;
 
     public InventoryManager InventoryManager;
+    public CreateEqItems CreateEqItems;
+    public UIManager UIManager;
 
+    private void Awake()
+    {
+        CreateEqItems = CreateEqItems.Instance;
+    }
     private void Update()
     {
         HandleTouchInput();
@@ -29,7 +36,6 @@ public class Slot : MonoBehaviour
         ItemIcon.gameObject.SetActive(true);
         ItemName.text = ItemInSlot.Name;
         ItemName.gameObject.SetActive(true);
-
     }
 
     //dla przedmiotow w eq na podstawie ID slotu jesli nie ma invetory menagera ktory wskazuje na eq to glowne
@@ -65,8 +71,9 @@ public class Slot : MonoBehaviour
                 Vector2 touchPosition = Camera.main.ScreenToWorldPoint(touch.position);
                 Collider2D hitCollider = Physics2D.OverlapPoint(touchPosition);
 
-                if (hitCollider != null && hitCollider.gameObject == gameObject)
-                { 
+                //jesli rodziecem slotow jest panel Eq
+                if (hitCollider != null && hitCollider.gameObject.transform.parent.name == "EqSlots" && hitCollider.gameObject == gameObject)
+                {
                     if (ItemIcon.sprite != null)
                     {
                         RemoveItemFromSlot();
@@ -74,6 +81,19 @@ public class Slot : MonoBehaviour
                     else
                     {
                         UIManager.Instance.ShowItemSelectionPanel(this);
+                    }
+                }
+                //jesli rodziecem slotow jest panel Inv
+                if (hitCollider != null && hitCollider.gameObject.transform.parent.name == gameObject.transform.parent.name && hitCollider.gameObject == gameObject)
+                {
+                    if(ItemInSlot != null)
+                    {
+                        UIManager.Instance.SelectItem(ItemInSlot);
+                        RemoveItemFromSlot();
+                    }
+                    else
+                    {
+                       //slot jest pusty
                     }
                 }
             }

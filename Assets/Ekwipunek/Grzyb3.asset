@@ -16,4 +16,5 @@ MonoBehaviour:
   Name: "Ko\u017Clarz babka"
   Sprite: {fileID: 21300000, guid: 23ed6364ace16f842979a55f4b9e1939, type: 3}
   Value: 60
+  RespChange: 3
   prefab: {fileID: 6338576231648929549, guid: 34aaa8036893a9e4c9f6378aed3d4237, type: 3}

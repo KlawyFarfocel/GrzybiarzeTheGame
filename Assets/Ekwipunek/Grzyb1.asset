@@ -16,4 +16,5 @@ MonoBehaviour:
   Name: "Ma\u015Blak"
   Sprite: {fileID: 21300000, guid: b874f65a77e964b4c8dd3af64cc601b4, type: 3}
   Value: 20
+  RespChange: 1
   prefab: {fileID: 2751064776039602334, guid: bb90e4da66eaafc43880a8dabc10f67f, type: 3}
