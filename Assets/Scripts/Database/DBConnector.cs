@@ -21,7 +21,7 @@ public class DBConnector : MonoBehaviour
         cmnd.CommandText = query;
         cmnd.ExecuteNonQuery();
     }
-    public void Update(string query) {
+    public void UpdateDB(string query) {
         IDbCommand cmnd = dbcon.CreateCommand();
         cmnd.CommandText = query;
         cmnd.ExecuteNonQuery();
