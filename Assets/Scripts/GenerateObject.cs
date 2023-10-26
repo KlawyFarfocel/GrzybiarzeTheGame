@@ -33,13 +33,8 @@ public class GenerateObject : MonoBehaviour
     {
 
         position = new Vector2(Random.Range(MinX, MaxX), Random.Range(MinY, MaxY));
-        // activeMushroom = item.prefab;
-        //  activeMushroomItem = item;
-        // activeMushroom.name = item.name;
         activeMushroom = Instantiate(item.prefab, position, Quaternion.identity);
         activeMushroom.AddComponent<ItemObject>().item = item;
-        //  Instantiate(activeMushroom, position, Quaternion.identity);
-
     }
 
     private void TrySpawnObject()

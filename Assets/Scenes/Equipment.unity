@@ -3504,7 +3504,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &992486618
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3563,7 +3563,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 486.14993, y: 41.899963}
+  m_AnchoredPosition: {x: 486.1499, y: 41.899902}
   m_SizeDelta: {x: 249.5, y: 268.4}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1038112249
@@ -5380,8 +5380,8 @@ MonoBehaviour:
   m_ChildAlignment: 0
   rows: 4
   columns: 4
-  cellSize: {x: 198, y: 296.95}
-  spacing: {x: 40, y: 50}
+  cellSize: {x: 193, y: 221.95001}
+  spacing: {x: 50, y: 200}
   fitType: 0
   fitX: 1
   fitY: 1
@@ -5647,13 +5647,17 @@ PrefabInstance:
       propertyPath: m_Name
       value: Helm
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 8882258790056441284, guid: 1ab9a001b39e7b046b0b2ec40209f7ff, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 7385451291222100612, guid: 1ab9a001b39e7b046b0b2ec40209f7ff, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1920836979}
+    - targetCorrespondingSourceObject: {fileID: 7385451291222100612, guid: 1ab9a001b39e7b046b0b2ec40209f7ff, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1920836984}
   m_SourcePrefab: {fileID: 100100000, guid: 1ab9a001b39e7b046b0b2ec40209f7ff, type: 3}
 --- !u!224 &1920836974 stripped
 RectTransform:
@@ -5705,6 +5709,31 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 150, y: 150}
   m_EdgeRadius: 0
+--- !u!114 &1920836984
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 340068313}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 653ccb556293ff34db356a9cc5b1d3c2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Padding:
+    m_Left: 0
+    m_Right: 0
+    m_Top: 0
+    m_Bottom: 0
+  m_ChildAlignment: 0
+  rows: 2
+  columns: 2
+  cellSize: {x: 75, y: 75}
+  spacing: {x: 0, y: 0}
+  fitType: 0
+  fitX: 1
+  fitY: 1
 --- !u!1 &1938280463 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 7385451291222100612, guid: 1ab9a001b39e7b046b0b2ec40209f7ff, type: 3}
