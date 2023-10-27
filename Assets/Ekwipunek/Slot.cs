@@ -71,29 +71,36 @@ public class Slot : MonoBehaviour
                 Vector2 touchPosition = Camera.main.ScreenToWorldPoint(touch.position);
                 Collider2D hitCollider = Physics2D.OverlapPoint(touchPosition);
 
-                //jesli rodziecem slotow jest panel Eq
-                if (hitCollider != null && hitCollider.gameObject.transform.parent.name == "EqSlots" && hitCollider.gameObject == gameObject)
+                if (hitCollider != null)
                 {
-                    if (ItemIcon.sprite != null)
+                    //jesli obiekt ma podpiety skrypt slot
+                    Slot slotScript = hitCollider.GetComponent<Slot>();
+                    if (slotScript != null)
                     {
-                        RemoveItemFromSlot();
-                    }
-                    else
-                    {
-                        UIManager.Instance.ShowItemSelectionPanel(this);
-                    }
-                }
-                //jesli rodziecem slotow jest panel Inv
-                if (hitCollider != null && hitCollider.gameObject.transform.parent.name == gameObject.transform.parent.name && hitCollider.gameObject == gameObject)
-                {
-                    if(ItemInSlot != null)
-                    {
-                        UIManager.Instance.SelectItem(ItemInSlot);
-                        RemoveItemFromSlot();
-                    }
-                    else
-                    {
-                       //slot jest pusty
+                        if (hitCollider.gameObject.transform.parent.name == "EqSlots" && hitCollider.gameObject == gameObject)
+                        {
+                            if (ItemIcon.sprite != null)
+                            {
+                                RemoveItemFromSlot();
+                            }
+                            else
+                            {
+                                UIManager.Instance.ShowItemSelectionPanel(this);
+                            }
+                        }
+                        //jesli rodziecem slotow jest panel Inv
+                        if (hitCollider.gameObject.transform.parent.name == gameObject.transform.parent.name && hitCollider.gameObject == this.gameObject)
+                        {
+                            if (ItemInSlot != null)
+                            {
+                                UIManager.Instance.SelectItem(ItemInSlot);
+                                RemoveItemFromSlot();
+                            }
+                            else
+                            {
+                                //slot jest pusty
+                            }
+                        }
                     }
                 }
             }
