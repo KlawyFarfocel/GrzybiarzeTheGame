@@ -38,6 +38,10 @@ public class DBConnector : MonoBehaviour
     {
         dbcon.Close();
     }
+    public void Close()
+    {
+        dbcon.Close();
+    }
     void Start()
     {
         //------------------------------- Wstêp
@@ -48,12 +52,12 @@ public class DBConnector : MonoBehaviour
         dbcon = new SqliteConnection(connection);
         dbcon.Open();
         //------------------------------ SELECT i wyswietlanie
-        IDataReader selectAllFromPlayer=Select("SELECT * FROM Testowa");
+/*        IDataReader selectAllFromPlayer=Select("SELECT * FROM Testowa");
         while (selectAllFromPlayer.Read())
         {
             Debug.Log("id: " + selectAllFromPlayer[0].ToString());
             Debug.Log("Pesos: " + selectAllFromPlayer[1].ToString());
-        }
+        }*/
         //-------------------------------
     }
 

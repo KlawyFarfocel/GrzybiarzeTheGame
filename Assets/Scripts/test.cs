@@ -3,21 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class test : MonoBehaviour
-
-    
 {
-    public Item[] EqList;
-    // Start is called before the first frame update
-    void Start()
+    public void Clicerk()
     {
-        
-        var a = SceneController.Instance.inventoryManager.slots;
-        Debug.Log(a.Length);
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        Debug.Log("Kliknieta");
     }
 }

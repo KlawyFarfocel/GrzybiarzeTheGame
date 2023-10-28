@@ -14,7 +14,7 @@ public class SpawnEnemy : MonoBehaviour
 
     private void Start()
     {
-        dbConnector = GameObject.Find("EnemySpawner").GetComponent<DBConnector>();
+        dbConnector = GameObject.Find("Las").GetComponent<DBConnector>();
         TrySpawnEnemy(2);
     }
 

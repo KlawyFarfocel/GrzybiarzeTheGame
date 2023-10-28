@@ -11,7 +11,7 @@ public class PlayerData : MonoBehaviour
     public GameObject player;
     void Start()
     {
-        dbConnector = GameObject.Find("LoadPlayerStats").GetComponent<DBConnector>();
+        dbConnector = GameObject.Find("Las").GetComponent<DBConnector>();
 
         IDataReader SelectPlayer = dbConnector.Select("SELECT hp,armor,str,vit,dex,luck FROM postac");
         while (SelectPlayer.Read())
@@ -30,6 +30,7 @@ public class PlayerData : MonoBehaviour
             int LUCK = Int32.Parse(luck);
 
             Player playerData = player.GetComponent<Player>();
+            Debug.Log(playerData.HP);
 
             playerData.HP = HP;
             playerData.ARMOR = ARMOR;
