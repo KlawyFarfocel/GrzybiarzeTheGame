@@ -14,14 +14,15 @@ public class BackgroundManager : MonoBehaviour
     public DBConnector dbCon;
     public GameObject background;
     public LevelManager levelManager;
+    public SpawnEnemy spawnEnemy;
     // Start is called before the first frame update
 
     void Start()
     {
         dbCon = GameObject.Find("Main Camera").GetComponent<DBConnector>();
         background = GameObject.Find("Background");
-        levelManager=GameObject.Find("LevelManager").GetComponent<LevelManager>();
-
+        levelManager = GameObject.Find("LevelManager").GetComponent<LevelManager>();
+        spawnEnemy = new SpawnEnemy();
         int level = levelManager.level;
         changeValues(level);
     }
@@ -37,7 +38,7 @@ public class BackgroundManager : MonoBehaviour
             float scaleY = float.Parse(SelectBG[5].ToString());
 
             Sprite BGSprite = Resources.Load<Sprite>(sprite);
-            background.GetComponent<SpriteRenderer>().sprite = BGSprite;
+            background.GetComponent<SpriteRenderer>().sprite = BGSprite;    
 
             Vector3 newPosition = new Vector3(posX, posY, -250);
             Vector3 newScale = new Vector3(scaleX, scaleY, -250);

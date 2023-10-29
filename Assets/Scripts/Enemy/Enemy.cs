@@ -7,7 +7,7 @@ public class Enemy : MonoBehaviour
     public int ID;
     public string Name;
     public int HP;
-    public double Damage;
+    public int Damage;
     public string SpriteName;
 }
 

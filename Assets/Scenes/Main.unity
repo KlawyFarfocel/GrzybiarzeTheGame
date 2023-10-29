@@ -1757,6 +1757,7 @@ MonoBehaviour:
   level: 0
   currentClicks: 0
   clicksTarget: 0
+  spawnEnemy: {fileID: 0}
 --- !u!4 &1056748596
 Transform:
   m_ObjectHideFlags: 0
@@ -3769,6 +3770,7 @@ MonoBehaviour:
   dbCon: {fileID: 0}
   background: {fileID: 0}
   levelManager: {fileID: 0}
+  spawnEnemy: {fileID: 0}
 --- !u!114 &2126623834
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -15,12 +15,13 @@ public class SpawnEnemy : MonoBehaviour
     private void Start()
     {
         dbConnector = GameObject.Find("Las").GetComponent<DBConnector>();
-        TrySpawnEnemy(2);
     }
 
     public void TrySpawnEnemy(int enemyID)
     {
-        IDataReader SelectEnemy = dbConnector.Select($"SELECT * FROM enemy WHERE Id = {enemyID} ");
+        dbConnector = GameObject.Find("Las").GetComponent<DBConnector>();
+
+        IDataReader SelectEnemy = dbConnector.Select($"SELECT * FROM enemy WHERE Id = {enemyID}");
         while (SelectEnemy.Read())
         {
             string id = SelectEnemy[0].ToString();

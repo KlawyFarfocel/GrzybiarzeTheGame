@@ -11,8 +11,9 @@ using UnityEngine;
         public int level;
         public int currentClicks;
         public int clicksTarget;
-        private BackgroundManager bgManager;
-        // Start is called before the first frame update
+         private BackgroundManager bgManager;
+    public SpawnEnemy spawnEnemy;
+    // Start is called before the first frame update
     void Start()
     {
         level = 1;
@@ -44,6 +45,10 @@ using UnityEngine;
                 currentClicks = 1;
                 GameObject.Find("LevelProgress").GetComponent<TextMeshProUGUI>().text = $"Poziom: {level} <br> Etap: {currentClicks}/{clicksTarget}";
                 bgManager.changeValues(level);
-            }
+
+            //po zmianie sceny resp enemy 
+            spawnEnemy = GameObject.Find("EnemySpawner").GetComponent<SpawnEnemy>();
+            spawnEnemy.TrySpawnEnemy(level-1);
         }
+    }
     }
