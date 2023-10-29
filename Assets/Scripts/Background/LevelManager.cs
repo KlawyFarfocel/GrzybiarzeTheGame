@@ -17,7 +17,7 @@ using UnityEngine;
     void Start()
     {
         level = 1;
-        currentClicks = 1;
+        currentClicks = 0;
     }
     private void Awake()
     {
@@ -36,15 +36,16 @@ using UnityEngine;
             if(currentClicks<clicksTarget)
             {
                 currentClicks++;
-            GameObject.Find("LevelProgress").GetComponent<TextMeshProUGUI>().text = $"Poziom: {level} <br> Etap: {currentClicks}/{clicksTarget}";
+            GameObject.Find("SectionText").GetComponent<TextMeshProUGUI>().text = $"Poziom:<br>{currentClicks}/{clicksTarget}";
             }
             else
             {
                 bgManager = GameObject.Find("Background").GetComponent<BackgroundManager>();
                 level++;
-                currentClicks = 1;
-                GameObject.Find("LevelProgress").GetComponent<TextMeshProUGUI>().text = $"Poziom: {level} <br> Etap: {currentClicks}/{clicksTarget}";
-                bgManager.changeValues(level);
+                currentClicks = 0;
+                GameObject.Find("SectionText").GetComponent<TextMeshProUGUI>().text = $"Poziom:<br>{currentClicks}/{clicksTarget}";
+                GameObject.Find("LevelText").GetComponent<TextMeshProUGUI>().text = $"Etap:<br>Las wydmowy";
+            bgManager.changeValues(level);
 
             //po zmianie sceny resp enemy 
             spawnEnemy = GameObject.Find("EnemySpawner").GetComponent<SpawnEnemy>();

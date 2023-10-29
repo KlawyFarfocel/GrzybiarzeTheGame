@@ -50,6 +50,6 @@ public class BackgroundManager : MonoBehaviour
         {
             levelManager.clicksTarget = Int32.Parse(SelectClicks[0].ToString());
         }
-        GameObject.Find("LevelProgress").GetComponent<TextMeshProUGUI>().text = $"Poziom: {levelManager.level} <br> Etap: {levelManager.currentClicks}/{levelManager.clicksTarget}";
+        levelManager.handleClicks();
     }
 }

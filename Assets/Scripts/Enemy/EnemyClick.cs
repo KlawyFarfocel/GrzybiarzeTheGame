@@ -39,7 +39,7 @@ public class EnemyClick : MonoBehaviour
             //ustawienie etapu na 1 
             levelManager = GameObject.Find("LevelManager").GetComponent<LevelManager>();
             levelManager.level = 1;
-            levelManager.currentClicks = 1;
+            levelManager.currentClicks = 0;
             bgManager.changeValues(levelManager.level);
             Destroy(enemy);
         }
