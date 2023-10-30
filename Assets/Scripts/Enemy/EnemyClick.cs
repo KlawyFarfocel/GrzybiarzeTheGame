@@ -22,7 +22,7 @@ public class EnemyClick : MonoBehaviour
         //testowa wersja walki po kliknieciu odebranie hp 
      
             enemyData.HP -= playerdata.STR;
-            playerdata.HP -= 1;
+            playerdata.HandleHealthLoss(1050);
             Debug.Log("enemy hp " + enemyData.HP);
             Debug.Log("player hp " + playerdata.HP);
         

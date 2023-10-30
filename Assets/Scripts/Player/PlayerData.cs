@@ -32,13 +32,14 @@ public class PlayerData : MonoBehaviour
             Player playerData = player.GetComponent<Player>();
             Debug.Log(playerData.HP);
 
-            playerData.HP = HP;
+            playerData.HP = HP* VIT * 10;
+            playerData.CURRENT_HP = HP * VIT * 10;
             playerData.ARMOR = ARMOR;
             playerData.STR = STR;
             playerData.VIT = VIT;
             playerData.DEX = DEX;
             playerData.LUCK = LUCK;
-
+            playerData.HandleHealthLoss(0); //ustawia tekst ui zeby bylo dobrze
         }
     }
 
