@@ -1645,6 +1645,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   HP: 0
+  CURRENT_HP: 0
   ARMOR: 0
   STR: 0
   VIT: 0
@@ -2548,7 +2549,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 40.75
+  m_fontSize: 42.85
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -2817,6 +2818,7 @@ GameObject:
   - component: {fileID: 1336300232}
   - component: {fileID: 1336300231}
   - component: {fileID: 1336300233}
+  - component: {fileID: 1336300234}
   m_Layer: 4
   m_Name: GoldBar
   m_TagString: Untagged
@@ -2929,6 +2931,19 @@ MonoBehaviour:
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
+--- !u!114 &1336300234
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1336300228}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc6381edd05bd0642b2cc33b09eb24fa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  textmeshpro_text: {fileID: 1171802744}
 --- !u!1 &1348241171
 GameObject:
   m_ObjectHideFlags: 0
@@ -3360,6 +3375,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1415997188}
+  - component: {fileID: 1415997189}
   m_Layer: 4
   m_Name: TopPanel
   m_TagString: Untagged
@@ -3387,6 +3403,18 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: -75}
   m_SizeDelta: {x: 0, y: 150}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1415997189
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1415997187}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ee4a2f10910f5bf4cabc4bf2bce85397, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1437144116
 GameObject:
   m_ObjectHideFlags: 0
@@ -3641,6 +3669,7 @@ GameObject:
   - component: {fileID: 1467662280}
   - component: {fileID: 1467662279}
   - component: {fileID: 1467662278}
+  - component: {fileID: 1467662282}
   m_Layer: 5
   m_Name: UI
   m_TagString: Untagged
@@ -3732,6 +3761,18 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!114 &1467662282
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1467662277}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ee4a2f10910f5bf4cabc4bf2bce85397, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1508853282
 PrefabInstance:
   m_ObjectHideFlags: 0

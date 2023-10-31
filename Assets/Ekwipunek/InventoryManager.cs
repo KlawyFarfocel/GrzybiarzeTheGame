@@ -7,6 +7,7 @@ using UnityEngine.SceneManagement;
 
 public class InventoryManager : MonoBehaviour
 {
+    private DBConnector dbConnector;
     public static InventoryManager Instance;
     public bool isNeededToStay = false;
     public Slot[] slots;
@@ -23,8 +24,9 @@ public class InventoryManager : MonoBehaviour
             }
         }
     }
-    public void ForceValueEvaluation()
+    public int ForceValueEvaluation()
     {
+       // dbConnector = GameObject.Find("TopBar").GetComponent<DBConnector>();
         Debug.Log("ForceValueEvaluation - Odpalam sie");
         int val = 0;
         for (int i = 0; i < slots.Length; i++)
@@ -34,12 +36,19 @@ public class InventoryManager : MonoBehaviour
                 val += slots[i].ItemInSlot.Value;
             }
         }
-        File.WriteAllText(Application.dataPath + "/Model/valuetoadd.txt", val.ToString());
+        return val;
+        /* File.WriteAllText(Application.dataPath + "/Model/valuetoadd.txt", val.ToString());
+        string updateQuery = "UPDATE postac SET moneytoadd = " + val ;
+        //Debug.Log(updateQuery);
+        Debug.Log(val);
+        dbConnector.UpdateDB(updateQuery);*/
     }
     private void Start()
     {
         Debug.Log("InventoryManager Start: " + gameObject.scene.name);
         slots = GetComponentsInChildren<Slot>();
+        //dbConnector = GameObject.Find("UI").GetComponent<DBConnector>();
+
     }
 
     public void AddItem(Item item)
