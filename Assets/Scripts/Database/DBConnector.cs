@@ -27,6 +27,10 @@ public class DBConnector : MonoBehaviour
         cmnd.ExecuteNonQuery();
     }
     public IDataReader Select(string query) {
+        string connection = "URI=file:" + Application.dataPath + "/Database/GrzybiarzeDatabase.db";
+        dbcon = new SqliteConnection(connection);
+        dbcon.Open();
+
         IDbCommand cmnd_read = dbcon.CreateCommand();
         IDataReader reader;
         cmnd_read.CommandText = query;
