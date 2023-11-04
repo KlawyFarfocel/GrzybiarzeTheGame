@@ -47,9 +47,9 @@ public class CreateEqItems : MonoBehaviour
 
         GameObject ChestPrefab = Resources.Load<GameObject>("Prefabs/Chest");
         GameObject Chest = Instantiate(ChestPrefab);
-        Chest.transform.parent = GameObject.Find("Las").transform;
-        GameObject.Find("Chest(Clone)").GetComponent<RectTransform>().position = new Vector3(44, 448, 1);
-
+        Chest.transform.SetParent(GameObject.Find("Las").transform,true);
+        Chest.GetComponent<RectTransform>().localPosition = new Vector3(-45, 400, 1);
+        Chest.GetComponent<RectTransform>().localScale=new Vector3(1, 1, 1);
 
         //pobranie z bazy itemu o losowym id
         int RandomIndex = UnityEngine.Random.Range(0, ItemCount);
@@ -96,6 +96,7 @@ public class CreateEqItems : MonoBehaviour
             //zaczytanie prefabu i stworzenie itemu na ekranie
             GameObject ItemPrefab = Resources.Load<GameObject>("Prefabs/Item");
             GameObject CreatedItem = Instantiate(ItemPrefab);
+            CreatedItem.transform.SetParent(GameObject.Find("Las").transform, true);
             eqItem item = CreatedItem.GetComponent<eqItem>();
 
             item.eq_id = ID;
@@ -114,6 +115,7 @@ public class CreateEqItems : MonoBehaviour
 
             Sprite itemsprite = Resources.Load<Sprite>($"Items/{SPRITE}");
             CreatedItem.GetComponent<SpriteRenderer>().sprite = itemsprite;
+            CreatedItem.GetComponent<SpriteRenderer>().sortingOrder = -2;
         }
     }
 }

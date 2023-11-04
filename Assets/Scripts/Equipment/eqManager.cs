@@ -56,8 +56,8 @@ public class eqManager : MonoBehaviour
     }
     void Start()
     {
-        dbCon=GameObject.Find("EqSlots").GetComponent<DBConnector>();
-        IDataReader getAllCollectedItems = dbCon.Select("SELECT item_id FROM all_eq");
+        dbCon = GameObject.Find("DBHandler").GetComponent<test>().dbConnector;
+        IDataReader getAllCollectedItems =dbCon.Select("SELECT item_id FROM all_eq");
         while (getAllCollectedItems.Read())
         {
             allCollectedItemsIdList.Add(
@@ -160,6 +160,7 @@ public class eqManager : MonoBehaviour
             GameObject Parent = GameObject.Find($"{ParentName}");
             GameObject Child = Parent.transform.GetChild(0).gameObject;
             Child.SetActive(true);
+            Debug.Log(itemtoWear.sprite);
             Child.GetComponent<Image>().sprite = Resources.Load<Sprite>("Items/" + itemtoWear.sprite);
 
             //Tutaj logika do dodawania statystyk
