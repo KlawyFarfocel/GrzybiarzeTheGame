@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class eqItem 
+public class eqItem : MonoBehaviour
 {
     public int eq_id;
     public int slot_id;

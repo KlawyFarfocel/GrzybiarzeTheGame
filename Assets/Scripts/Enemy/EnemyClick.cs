@@ -9,7 +9,7 @@ public class EnemyClick : MonoBehaviour
     private InventoryManager items = InventoryManager.Instance;
     private BackgroundManager bgManager;
     private LevelManager levelManager;
-
+    private CreateEqItems CreateItem;
 
     public void EnemyClickAction(GameObject enemy)
     {
@@ -46,10 +46,10 @@ public class EnemyClick : MonoBehaviour
 
         if (enemyData.HP <= 0)
         {
+            CreateItem = new CreateEqItems();
             Debug.Log("Enemy died");
             Destroy(enemy);
-            //pewnie resp skyrznki po wygranej 
-
+            CreateItem.CreateItem();
         }
     }
 }
