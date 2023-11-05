@@ -17,6 +17,8 @@ public class CreateEqItems : MonoBehaviour
     private DBConnector dbConnector;
     public GameObject ItemPrefab;
 
+    public Player playerData;
+
 
     private void Start()
     {
@@ -106,7 +108,7 @@ public class CreateEqItems : MonoBehaviour
             item.mod_1_val = MOD_1_VAL ?? 0;
             item.mod_2 = MOD_2 ?? 0;
             item.mod_2_val = MOD_2_VAL ?? 0;
-            item.mod_3 = MOD_3 ?? 0; 
+            item.mod_3 = MOD_3 ?? 0;
             item.mod_3_val = MOD_3_VAL ?? 0;
             item.mod_4 = MOD_4 ?? 0;
             item.mod_4_val = MOD_4_VAL ?? 0;

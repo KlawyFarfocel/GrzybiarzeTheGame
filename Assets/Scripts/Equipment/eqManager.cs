@@ -6,9 +6,12 @@ using UnityEngine;
 using System;
 using UnityEditor;
 using UnityEngine.UI;
+using static UnityEditor.Progress;
 
 public class eqManager : MonoBehaviour
 {
+    public Player playerData;
+
     public List<int> allCollectedItemsIdList= new();
     public List<eqItem> allCollectedItems = new();
     public DBConnector dbCon;
@@ -68,7 +71,7 @@ public class eqManager : MonoBehaviour
         IDataReader getAllCollectedItemsData = dbCon.Select(collectedItemsDataQuery);
         while(getAllCollectedItemsData.Read())
         {
-            eqItem eqItem = new();
+            eqItem eqItem = gameObject.AddComponent<eqItem>();
             eqItem.eq_id = Int32.Parse(getAllCollectedItemsData[0].ToString());
             eqItem.slot_id= Int32.Parse(getAllCollectedItemsData[1].ToString());
             eqItem.armor= Int32.Parse(getAllCollectedItemsData[2].ToString());
@@ -164,6 +167,9 @@ public class eqManager : MonoBehaviour
             Child.GetComponent<Image>().sprite = Resources.Load<Sprite>("Items/" + itemtoWear.sprite);
 
             //Tutaj logika do dodawania statystyk
+
+            playerData = GameObject.Find("LevelManager").GetComponent<Player>();
+            playerData.UpdateStats(itemtoWear, true , equippedItemsIdList);
         }
     }
 }
