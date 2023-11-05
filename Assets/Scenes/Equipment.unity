@@ -7275,6 +7275,10 @@ MonoBehaviour:
   textmeshpro_text3: {fileID: 508558517}
   textmeshpro_text4: {fileID: 1190003616}
   textmeshpro_text5: {fileID: 718107667}
+  textmeshpro_text6: {fileID: 211197891}
+  textmeshpro_text7: {fileID: 887776825}
+  textmeshpro_text8: {fileID: 1737536249}
+  textmeshpro_text9: {fileID: 563917737}
 --- !u!114 &1874461835
 MonoBehaviour:
   m_ObjectHideFlags: 0
