@@ -7,6 +7,10 @@ using System;
 using UnityEditor;
 using UnityEngine.UI;
 using static UnityEditor.Progress;
+using System.Linq;
+using Unity.VisualScripting;
+using UnityEngine.EventSystems;
+using UnityEngine.Events;
 
 public class eqManager : MonoBehaviour
 {
@@ -16,6 +20,8 @@ public class eqManager : MonoBehaviour
     public List<eqItem> allCollectedItems = new();
     public DBConnector dbCon;
     public List<int> equippedItemsIdList = new();
+    public List<string> allItemsNameList = new();
+    public GameObject itemsMenuPopup;
     // Start is called before the first frame update
     string generateINQuery(string query, List<int> inList)
     {
@@ -57,9 +63,118 @@ public class eqManager : MonoBehaviour
             checkIfNotNull(getEquippedItemsQuery[7]);
         }
     }
+    public void HandleEqSlotClick(GameObject slot)
+    {
+        if (slot.GetComponent<Image>().sprite == null) 
+        {// Nie ma zalozonego itema - otworz menu i pozwol zalozyc
+            string item_slot_id = Variables.Object(slot).Get("slot_id").ToString();
+            
+            List<int> allCollectedItemsIdOfType = new(); // id wszystkich itemów z tego slota
+            List<eqItem> allColledtedItemsOfType=new();
+
+            IDataReader getAllItemsIdOfSlot = dbCon.Select($"SELECT * FROM all_eq WHERE slot_id={item_slot_id}");
+            while (getAllItemsIdOfSlot.Read())
+            {
+                allCollectedItemsIdOfType.Add(int.Parse(getAllItemsIdOfSlot[1].ToString()));
+            }
+            itemsMenuPopup.SetActive(true);
+            foreach (int item in allCollectedItemsIdOfType)//Tworzenie slotów
+            {
+                eqItem eqItem = allCollectedItems.Find(collectedItem => collectedItem.eq_id == item);
+                Debug.Log(allCollectedItems[0].eq_id);
+                GameObject slotPrefab = Resources.Load<GameObject>("Prefabs/Slot");
+
+                GameObject createdSlot = Instantiate(slotPrefab);
+
+                Variables.Object(createdSlot).Set("item_id", eqItem.eq_id);
+
+                createdSlot.transform.SetParent(GameObject.Find("Row").transform, true);
+                createdSlot.transform.localScale = new Vector3(1, 1, 1);
+
+                createdSlot.transform.Find("ItemIcon").GetComponent<Image>().sprite = Resources.Load<Sprite>("Items/"+eqItem.sprite);
+                createdSlot.transform.Find("ItemIcon").gameObject.SetActive(true);
+                
+                UnityEvent clickEvent=new UnityEvent();
+                clickEvent.AddListener(() => HandleMenuItemClick(createdSlot,slot));
+
+                EventTrigger.Entry pointerClickEntry = new EventTrigger.Entry
+                {
+                    eventID = EventTriggerType.PointerClick
+                };
+                pointerClickEntry.callback.AddListener((eventData) => clickEvent.Invoke());
+                createdSlot.GetComponent<EventTrigger>().triggers.Add(pointerClickEntry);
+            }
+            //Klikniêcie na item w menu obs³uguje HandleMenuItemsClick()
+            
+        }
+        else  // jak ma sprite -> najpierw zdejmij item
+        {// zdejmij item
+            eqItem itemToRemove = allCollectedItems.FirstOrDefault(item => item.sprite == slot.GetComponent<Image>().sprite.name); //
+            
+            int unequippedItemId= equippedItemsIdList.Find(id => id == itemToRemove.eq_id);
+            equippedItemsIdList[unequippedItemId-1] = -1; // -1 oznacza ze nie ma zalozonego itema
+            slot.GetComponent<Image>().sprite = null;
+
+            ////////////////////////////////////////////////////////////////////
+
+            ///
+            ///
+            ///
+            /// TUTAJ LOGIKA DO ODEJMOWANIA STATYSTYK
+            /// 
+            ///
+            ///
+
+            ////////////////////////////////////////////////////////////////////
+            //usuwanie stworzonych slotów
+            DeleteObsoleteSlots();
+        }
+    }
+    void DeleteObsoleteSlots()
+    {
+        GameObject row = GameObject.Find("Row");
+        if (row != null)
+        {
+            int childs = row.transform.childCount;
+            for (int i = childs - 1; i >= 0; i--)
+            {
+                GameObject.Destroy(row.transform.GetChild(i).gameObject);
+            }
+            itemsMenuPopup.SetActive(false);
+        }
+
+    }
+    public void HandleMenuItemClick(GameObject slot,GameObject itemFrame)//klikanie juz na item w menu zeby ubraæ
+    {
+        int item_id = int.Parse(Variables.Object(slot).Get("item_id").ToString());
+        int slot_id = int.Parse(Variables.Object(itemFrame).Get("slot_id").ToString());
+        itemFrame.GetComponent<Image>().sprite = Resources.Load<Sprite>("Items/" + allCollectedItems[item_id - 1].sprite);
+        equippedItemsIdList[slot_id-1]=item_id;
+        ////////////////////////////////////////////////////////////////////
+
+        ///
+        ///
+        ///
+        /// TUTAJ LOGIKA DO DODANIA STATYSTYK
+        /// 
+        ///
+        ///
+
+        ////////////////////////////////////////////////////////////////////
+        //usuwanie wszystkich itemow
+        DeleteObsoleteSlots();
+    }
+
     void Start()
     {
-        dbCon = GameObject.Find("DBHandler").GetComponent<test>().dbConnector;
+        dbCon = GameObject.Find("EqSlots").GetComponent<DBConnector>();
+        IDataReader getAllItemsNames = dbCon.Select("SELECT name FROM eq");
+        while (getAllItemsNames.Read())
+        {
+            allItemsNameList.Add(
+                getAllItemsNames[0].ToString()
+            );
+        }
         IDataReader getAllCollectedItems =dbCon.Select("SELECT item_id FROM all_eq");
         while (getAllCollectedItems.Read())
         {
@@ -67,7 +182,7 @@ public class eqManager : MonoBehaviour
                 Int32.Parse(getAllCollectedItems[0].ToString())
             );//dodaj id itemów do listy
         }
-        string collectedItemsDataQuery=generateINQuery("SELECT * FROM eq WHERE eq_id", allCollectedItemsIdList);
+        string collectedItemsDataQuery="SELECT * FROM eq ORDER BY s_id";
         IDataReader getAllCollectedItemsData = dbCon.Select(collectedItemsDataQuery);
         while(getAllCollectedItemsData.Read())
         {
@@ -118,7 +233,6 @@ public class eqManager : MonoBehaviour
         }
         checkEquippedItems();
         loadEquippedItems();
-        putOnItem("Backpack", allCollectedItems.Find(item => item.slot_id == 2));
     }
 
     void loadEquippedItems()
@@ -163,13 +277,12 @@ public class eqManager : MonoBehaviour
             GameObject Parent = GameObject.Find($"{ParentName}");
             GameObject Child = Parent.transform.GetChild(0).gameObject;
             Child.SetActive(true);
-            Debug.Log(itemtoWear.sprite);
             Child.GetComponent<Image>().sprite = Resources.Load<Sprite>("Items/" + itemtoWear.sprite);
 
             //Tutaj logika do dodawania statystyk
-
+/*
             playerData = GameObject.Find("LevelManager").GetComponent<Player>();
-            playerData.UpdateStats(itemtoWear, true , equippedItemsIdList);
+            playerData.UpdateStats(itemtoWear, true , equippedItemsIdList);*/
         }
     }
 }
