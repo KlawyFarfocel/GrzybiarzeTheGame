@@ -21,6 +21,7 @@ public class Player : MonoBehaviour
 
     private static Player instance;
     private DBConnector dbConnector;
+    private eqManager eqManager;
 
     public void Awake()
     {
@@ -102,30 +103,20 @@ public class Player : MonoBehaviour
             this.HandleHealthLoss(0); //ustawia tekst ui zeby bylo dobrze
         }
     }
-
-    
-    public void UpdateStats(eqItem item, bool Add , List<int> eqitems)
+    public void AddStats(eqItem item)
     {
-        //Jesli statystyki maja byc dodane i item nie jest jeszcze zalozony
-        if (!eqitems.Contains(item.eq_id))
-        {
-            if (Add == true)
-            {
-                if (item.mod_1 != 0) { this.VIT += item.mod_1_val; }
-                if (item.mod_2 != 0) { this.DEX += item.mod_2_val; }
-                if (item.mod_3 != 0) { this.STR += item.mod_3_val; }
-                if (item.mod_4 != 0) { this.LUCK += item.mod_4_val; }
-            }
-        }
-        else
-        {
-            if (Add == false) //zdjecie przedmiotu czyli trzeba staty odjac
-            {
-                if (item.mod_1 != 0) { this.VIT -= item.mod_1_val; }
-                if (item.mod_2 != 0) { this.DEX -= item.mod_2_val; }
-                if (item.mod_3 != 0) { this.STR -= item.mod_3_val; }
-                if (item.mod_4 != 0) { this.LUCK -= item.mod_4_val; }
-            }
-        }
+        if (item.armor != 0 ) { this.ARMOR += item.armor; }
+        if (item.mod_1 != 0) { this.VIT += item.mod_1_val; }
+        if (item.mod_2 != 0) { this.DEX += item.mod_2_val; }
+        if (item.mod_3 != 0) { this.STR += item.mod_3_val; }
+        if (item.mod_4 != 0) { this.LUCK += item.mod_4_val; }
     }
+    public void RemoveStats(eqItem item)
+    {
+        if (item.armor != 0) { this.ARMOR -= item.armor; }
+        if (item.mod_1 != 0) { this.VIT -= item.mod_1_val; }
+        if (item.mod_2 != 0) { this.DEX -= item.mod_2_val; }
+        if (item.mod_3 != 0) { this.STR -= item.mod_3_val; }
+        if (item.mod_4 != 0) { this.LUCK -= item.mod_4_val; }
+    } 
 }

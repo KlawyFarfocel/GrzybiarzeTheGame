@@ -11,7 +11,8 @@ public class InventoryManager : MonoBehaviour
     public static InventoryManager Instance;
     public bool isNeededToStay = false;
     public Slot[] slots;
-
+    public List<Item> Mushrooms;
+    public int val;
 
     private void Awake()
     {
@@ -24,44 +25,29 @@ public class InventoryManager : MonoBehaviour
             }
         }
     }
-    public int ForceValueEvaluation()
-    {
-        // dbConnector = GameObject.Find("TopBar").GetComponent<DBConnector>();
-        Debug.Log("ForceValueEvaluation - Odpalam sie");
-        int val = 0;
-        for (int i = 0; i < slots.Length; i++)
-        {
-            if (slots[i].ItemIcon.sprite != null)
-            {
-                val += slots[i].ItemInSlot.Value;
-            }
-        }
-        return val;
-        /* File.WriteAllText(Application.dataPath + "/Model/valuetoadd.txt", val.ToString());
-        string updateQuery = "UPDATE postac SET moneytoadd = " + val ;
-        //Debug.Log(updateQuery);
-        Debug.Log(val);
-        dbConnector.UpdateDB(updateQuery);*/
-    }
     private void Start()
     {
         Debug.Log("InventoryManager Start: " + gameObject.scene.name);
-        slots = GetComponentsInChildren<Slot>();
+        Mushrooms = new List<Item>();
         //dbConnector = GameObject.Find("UI").GetComponent<DBConnector>();
 
     }
 
     public void AddItem(Item item)
     {
-        Debug.Log("Znalazles:"+item.Name);
-        for (int i = 0; i < slots.Length; i++)
-        {
-            if (slots[i].ItemInSlot == null)
-            {
-                slots[i].AddItemToSlot(item);
-                break;
-            }
-        }
+        Mushrooms.Add(item);
+        val += item.Value;
+    }
+
+    public int GetVal()
+    {
+        return val;
+    }
+
+    public void Clear()
+    {
+        Mushrooms.Clear();
+        val = 0;
     }
 }
 

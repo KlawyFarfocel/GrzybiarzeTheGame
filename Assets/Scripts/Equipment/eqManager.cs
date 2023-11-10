@@ -111,23 +111,14 @@ public class eqManager : MonoBehaviour
         {// zdejmij item
             eqItem itemToRemove = allCollectedItems.FirstOrDefault(item => item.sprite == slot.GetComponent<Image>().sprite.name); //
             Debug.Log("id itema " + itemToRemove.slot_id);
-/*            int unequippedItemId= equippedItemsIdList.Find(id => id == itemToRemove.slot_id);
+            /*int unequippedItemId= equippedItemsIdList.Find(id => id == itemToRemove.slot_id);
             Debug.Log(unequippedItemId);*/
+
+            //odejmowanie statow
+            playerData.RemoveStats(itemToRemove);
+
             equippedItemsIdList[itemToRemove.slot_id - 1] = -1; // -1 oznacza ze nie ma zalozonego itema
             slot.GetComponent<Image>().sprite = null;
-
-            ////////////////////////////////////////////////////////////////////
-
-            ///
-            ///
-            ///
-            /// TUTAJ LOGIKA DO ODEJMOWANIA STATYSTYK
-            /// 
-            ///
-            ///
-
-            ////////////////////////////////////////////////////////////////////
-            //usuwanie stworzonych slotów
             DeleteObsoleteSlots();
         }
     }
@@ -150,24 +141,19 @@ public class eqManager : MonoBehaviour
         int item_id = int.Parse(Variables.Object(slot).Get("item_id").ToString());
         int slot_id = int.Parse(Variables.Object(itemFrame).Get("slot_id").ToString());
         itemFrame.GetComponent<Image>().sprite = Resources.Load<Sprite>("Items/" + allCollectedItems[item_id - 1].sprite);
-        equippedItemsIdList[slot_id-1]=item_id;
-        ////////////////////////////////////////////////////////////////////
+        equippedItemsIdList[slot_id-1]= item_id;
+        
+        //dodawanie statow
+        playerData.AddStats(allCollectedItems[item_id - 1]);
 
-        ///
-        ///
-        ///
-        /// TUTAJ LOGIKA DO DODANIA STATYSTYK
-        /// 
-        ///
-        ///
-
-        ////////////////////////////////////////////////////////////////////
         //usuwanie wszystkich itemow
         DeleteObsoleteSlots();
     }
 
     void Start()
     {
+        playerData = GameObject.Find("LevelManager").GetComponent<Player>();
+
         dbCon = GameObject.Find("EqSlots").GetComponent<DBConnector>();
         IDataReader getAllItemsNames = dbCon.Select("SELECT name FROM eq");
         while (getAllItemsNames.Read())
@@ -202,19 +188,19 @@ public class eqManager : MonoBehaviour
             }
             else
             {
-                eqItem.mod_2 = -1;
-                eqItem.mod_2_val = -1;
+                eqItem.mod_2 = 0;
+                eqItem.mod_2_val = 0;
             }
 
             if (getAllCollectedItemsData[7] != DBNull.Value)
             {
-                eqItem.mod_4 = Int32.Parse(getAllCollectedItemsData[7].ToString());
-                eqItem.mod_4_val = Int32.Parse(getAllCollectedItemsData[8].ToString());
+                eqItem.mod_3 = Int32.Parse(getAllCollectedItemsData[7].ToString());
+                eqItem.mod_3_val = Int32.Parse(getAllCollectedItemsData[8].ToString());
             }
             else
             {
-                eqItem.mod_4 = -1;
-                eqItem.mod_4_val = -1;
+                eqItem.mod_3 = 0;
+                eqItem.mod_3_val = 0;
             }
 
             if (getAllCollectedItemsData[9] != DBNull.Value)
@@ -224,8 +210,8 @@ public class eqManager : MonoBehaviour
             }
             else
             {
-                eqItem.mod_4 = -1;
-                eqItem.mod_4_val = -1;
+                eqItem.mod_4 = 0;
+                eqItem.mod_4_val = 0;
             }
             eqItem.name = getAllCollectedItemsData[11].ToString();
             eqItem.sprite= getAllCollectedItemsData[12].ToString();

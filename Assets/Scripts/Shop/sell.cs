@@ -19,8 +19,8 @@ public class sell : MonoBehaviour
         {
             //  Debug.Log(selectAllFromPlayer.ToString()) ;
 
-             wal = selectAllFromPlayer[0].ToString();
-             wal_add = selectAllFromPlayer[1].ToString();
+            wal = selectAllFromPlayer[0].ToString();
+            wal_add = selectAllFromPlayer[1].ToString();
             int V = int.Parse(wal);
             int V_add = int.Parse(wal_add);
             int wynik = V + V_add;
@@ -31,16 +31,14 @@ public class sell : MonoBehaviour
             //Debug.Log(updateQuery);
             dbConnector.UpdateDB(updateQuery1);
         }
-       /* int V=int.Parse(wal);
-        int V_add=int.Parse(wal_add);
-        int wynik=V+V_add;
-        File.WriteAllText(Application.dataPath + "/Model/value.txt",wynik.ToString());
-        File.WriteAllText(Application.dataPath + "/Model/valuetoadd.txt", "0");*/
+        /* int V=int.Parse(wal);
+         int V_add=int.Parse(wal_add);
+         int wynik=V+V_add;
+         File.WriteAllText(Application.dataPath + "/Model/value.txt",wynik.ToString());
+         File.WriteAllText(Application.dataPath + "/Model/valuetoadd.txt", "0");*/
 
-        foreach (Slot slot in items.slots) //przepierdol sie po slotach i poodpinaj itemy
-        {
-            slot.RemoveItemFromSlot();
-        }
+        items.Clear();
+
     }
     public void Start()
     {
@@ -50,7 +48,7 @@ public class sell : MonoBehaviour
 
     public void Update()
     {
-        int xd = items.ForceValueEvaluation();
+        int xd = items.GetVal();
         Debug.Log(xd);
         string updateQuery = "UPDATE postac SET moneytoadd = " + xd;
         //Debug.Log(updateQuery);
