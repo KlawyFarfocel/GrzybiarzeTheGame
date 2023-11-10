@@ -53,6 +53,7 @@ public class InventoryManager : MonoBehaviour
 
     public void AddItem(Item item)
     {
+        Debug.Log("Znalazles:"+item.Name);
         for (int i = 0; i < slots.Length; i++)
         {
             if (slots[i].ItemInSlot == null)

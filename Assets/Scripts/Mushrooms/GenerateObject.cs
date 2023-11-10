@@ -24,7 +24,6 @@ public class GenerateObject : MonoBehaviour
 
     void Start()
     {
-        mushroomsList = new List<Item>();
         SetMinMax();
         connector = GameObject.Find("Las").GetComponent<DBConnector>();
         GetMushrooms();
@@ -43,7 +42,8 @@ public class GenerateObject : MonoBehaviour
         IDataReader GetMushrooms = connector.Select("SELECT * FROM Item");
         while (GetMushrooms.Read())
         {
-            Item mushroom = new Item();
+            GameObject itemGO = new GameObject("Item");
+            Item mushroom = itemGO.AddComponent<Item>();
 
             string id = GetMushrooms[0].ToString();
             int ID = Int32.Parse(id);
@@ -63,7 +63,6 @@ public class GenerateObject : MonoBehaviour
             mushroom.RespChange = RespChance;
             mushroomsList.Add(mushroom);
         }
-
     }
 
 
