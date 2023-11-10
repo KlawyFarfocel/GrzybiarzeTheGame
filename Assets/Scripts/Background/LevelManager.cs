@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Data;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 
     public class LevelManager : MonoBehaviour
@@ -14,6 +15,25 @@ using UnityEngine;
          private BackgroundManager bgManager;
     public SpawnEnemy spawnEnemy;
     // Start is called before the first frame update
+
+    T GetStateMachineBehaviour<T>(Animator animator, string stateName) where T : StateMachineBehaviour
+    {
+        AnimatorStateInfo stateInfo = animator.GetCurrentAnimatorStateInfo(0);
+
+        // Check if the state name matches
+        if (stateInfo.IsName(stateName))
+        {
+            // Loop through the behaviours of the current state
+            foreach (var behaviour in animator.GetBehaviours<T>())
+            {
+                // Return the first one found
+                return behaviour;
+            }
+        }
+
+        return null;
+    }
+
     void Start()
     {
         level = 1;

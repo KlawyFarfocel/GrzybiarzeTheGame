@@ -182,9 +182,9 @@ public class eqManager : MonoBehaviour
                 Int32.Parse(getAllCollectedItems[0].ToString())
             );//dodaj id itemów do listy
         }
-        string collectedItemsDataQuery="SELECT * FROM eq ORDER BY s_id";
+        string collectedItemsDataQuery = generateINQuery("SELECT * FROM eq WHERE eq_id", allCollectedItemsIdList);
         IDataReader getAllCollectedItemsData = dbCon.Select(collectedItemsDataQuery);
-        while(getAllCollectedItemsData.Read())
+        while (getAllCollectedItemsData.Read())
         {
             eqItem eqItem = gameObject.AddComponent<eqItem>();
             eqItem.eq_id = Int32.Parse(getAllCollectedItemsData[0].ToString());
