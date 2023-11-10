@@ -3024,7 +3024,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 40.75
+  m_fontSize: 47.1
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -3597,10 +3597,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d4ad3b70a8099b545a5fe46b7baf56cf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Muhsrooms:
-  - {fileID: 11400000, guid: 3db70b3d2040586418e124622c8c87ad, type: 2}
-  - {fileID: 11400000, guid: b2187ab0c7070eb4b818261b11fadf89, type: 2}
-  - {fileID: 11400000, guid: ba30bdeef0ef4ae4782ced1c95503c37, type: 2}
+  mushroomsList: []
+  prefab: {fileID: 2751064776039602334, guid: bdab2ac999f17e548815579b2725a82a, type: 3}
+  connector: {fileID: 0}
 --- !u!114 &1384834306
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -26,7 +26,7 @@ public class InventoryManager : MonoBehaviour
     }
     public int ForceValueEvaluation()
     {
-       // dbConnector = GameObject.Find("TopBar").GetComponent<DBConnector>();
+        // dbConnector = GameObject.Find("TopBar").GetComponent<DBConnector>();
         Debug.Log("ForceValueEvaluation - Odpalam sie");
         int val = 0;
         for (int i = 0; i < slots.Length; i++)
