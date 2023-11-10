@@ -110,9 +110,10 @@ public class eqManager : MonoBehaviour
         else  // jak ma sprite -> najpierw zdejmij item
         {// zdejmij item
             eqItem itemToRemove = allCollectedItems.FirstOrDefault(item => item.sprite == slot.GetComponent<Image>().sprite.name); //
-            
-            int unequippedItemId= equippedItemsIdList.Find(id => id == itemToRemove.eq_id);
-            equippedItemsIdList[unequippedItemId-1] = -1; // -1 oznacza ze nie ma zalozonego itema
+            Debug.Log("id itema " + itemToRemove.slot_id);
+/*            int unequippedItemId= equippedItemsIdList.Find(id => id == itemToRemove.slot_id);
+            Debug.Log(unequippedItemId);*/
+            equippedItemsIdList[itemToRemove.slot_id - 1] = -1; // -1 oznacza ze nie ma zalozonego itema
             slot.GetComponent<Image>().sprite = null;
 
             ////////////////////////////////////////////////////////////////////
@@ -239,35 +240,35 @@ public class eqManager : MonoBehaviour
     {
         //Ubierz Heada
         int HeadItemEquippedId = equippedItemsIdList[0];
-        eqItem headItem = allCollectedItems.Find(item => item.slot_id == HeadItemEquippedId);
+        eqItem headItem = allCollectedItems.Find(item => item.eq_id == HeadItemEquippedId);
         putOnItem("Helm", headItem);
 
         int ChestItemEquippedId = equippedItemsIdList[1];
-        eqItem ChestItem = allCollectedItems.Find(item => item.slot_id == ChestItemEquippedId);
+        eqItem ChestItem = allCollectedItems.Find(item => item.eq_id == ChestItemEquippedId);
         putOnItem("Chest", ChestItem);
 
         int BackpackItemEquippedId = equippedItemsIdList[2];
-        eqItem BackpackItem = allCollectedItems.Find(item => item.slot_id == BackpackItemEquippedId);
+        eqItem BackpackItem = allCollectedItems.Find(item => item.eq_id == BackpackItemEquippedId);
         putOnItem("Backpack", BackpackItem);
 
         int HandsItemEquippedId = equippedItemsIdList[3];
-        eqItem HandsItem = allCollectedItems.Find(item => item.slot_id == HandsItemEquippedId);
+        eqItem HandsItem = allCollectedItems.Find(item => item.eq_id == HandsItemEquippedId);
         putOnItem("Accessories", HandsItem);
 
         int LegsItemEquippedId = equippedItemsIdList[4];
-        eqItem LegsItem = allCollectedItems.Find(item => item.slot_id == LegsItemEquippedId);
+        eqItem LegsItem = allCollectedItems.Find(item => item.eq_id == LegsItemEquippedId);
         putOnItem("Legs", LegsItem);
 
         int BootsItemEquippedId = equippedItemsIdList[5];
-        eqItem BootsItem = allCollectedItems.Find(item => item.slot_id == BootsItemEquippedId);
+        eqItem BootsItem = allCollectedItems.Find(item => item.eq_id == BootsItemEquippedId);
         putOnItem("Boots", BootsItem);
 
         int MainHandItemEquippedId = equippedItemsIdList[6];
-        eqItem MainHandItem = allCollectedItems.Find(item => item.slot_id == MainHandItemEquippedId);
+        eqItem MainHandItem = allCollectedItems.Find(item => item.eq_id == MainHandItemEquippedId);
         putOnItem("MainHand", MainHandItem);
 
         int OffHandItemEquippedId = equippedItemsIdList[7];
-        eqItem OffHandItem = allCollectedItems.Find(item => item.slot_id == OffHandItemEquippedId);
+        eqItem OffHandItem = allCollectedItems.Find(item => item.eq_id == OffHandItemEquippedId);
         putOnItem("OffHand", OffHandItem);
     }
     void putOnItem(string ParentName,eqItem itemtoWear)
