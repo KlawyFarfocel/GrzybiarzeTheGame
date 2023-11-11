@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.Common;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UIElements;
 using static UnityEditor.Progress;
 using static UnityEngine.EventSystems.EventTrigger;
@@ -38,30 +39,23 @@ public class CreateEqItems : MonoBehaviour
         //EqManager.Instance.AddItem(item);
     }
 
-    public void CreateItem()
+    public eqItem RespItem()
     {
         dbConnector = GameObject.Find("Las").GetComponent<DBConnector>();
         IDataReader GetItemsCount = dbConnector.Select("Select count(*) FROM eq");
         string Count = GetItemsCount[0].ToString();
         int ItemCount = Int32.Parse(Count);
 
-        // tworzenie skrzynki
-
-        GameObject ChestPrefab = Resources.Load<GameObject>("Prefabs/Chest");
-        GameObject Chest = Instantiate(ChestPrefab);
-        Chest.transform.SetParent(GameObject.Find("Las").transform,true);
-        Chest.GetComponent<RectTransform>().localPosition = new Vector3(-45, 400, 1);
-        Chest.GetComponent<RectTransform>().localScale=new Vector3(1, 1, 1);
-
         //pobranie z bazy itemu o losowym id
         int RandomIndex = UnityEngine.Random.Range(0, ItemCount);
+
+        eqItem item = new eqItem();
         IDataReader createItem = dbConnector.Select($"SELECT * FROM eq WHERE eq_id = {RandomIndex}");
         while (createItem.Read())
         {
             string id = createItem[0].ToString();
             int ID = Int32.Parse(id);
             Debug.Log($"{id} oraz {ID}");
-
 
             string s_id = createItem[1].ToString();
             int S_ID = Int32.Parse(s_id);
@@ -96,10 +90,12 @@ public class CreateEqItems : MonoBehaviour
             string SPRITE = createItem[12].ToString();
 
             //zaczytanie prefabu i stworzenie itemu na ekranie
+            /*
             GameObject ItemPrefab = Resources.Load<GameObject>("Prefabs/Item");
             GameObject CreatedItem = Instantiate(ItemPrefab);
             CreatedItem.transform.SetParent(GameObject.Find("Las").transform, true);
-            eqItem item = CreatedItem.GetComponent<eqItem>();
+            item = CreatedItem.GetComponent<eqItem>();
+            */
 
             item.eq_id = ID;
             item.slot_id = S_ID;
@@ -115,9 +111,25 @@ public class CreateEqItems : MonoBehaviour
             item.name = NAME;
             item.sprite = SPRITE;
 
+            /*
             Sprite itemsprite = Resources.Load<Sprite>($"Items/{SPRITE}");
             CreatedItem.GetComponent<SpriteRenderer>().sprite = itemsprite;
             CreatedItem.GetComponent<SpriteRenderer>().sortingOrder = -2;
+            */
+
+
+            //narazie wy³¹czone ¿eby nie dodawa³o do bazy
+            //dbConnector.Insert($"Insert INTO all_eq(item_id,slot_id) VALUES({ID} , {S_ID})");
         }
+        return (item);
+    }
+
+    public void GenerateChest()
+    {
+        GameObject ChestPrefab = Resources.Load<GameObject>("Prefabs/Chest");
+        GameObject Chest = Instantiate(ChestPrefab);
+        Chest.transform.SetParent(GameObject.Find("Las").transform,true);
+        Chest.GetComponent<RectTransform>().localPosition = new Vector3(-45, 400, 1);
+        Chest.GetComponent<RectTransform>().localScale=new Vector3(1, 1, 1);
     }
 }

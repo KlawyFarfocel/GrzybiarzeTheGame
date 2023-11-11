@@ -111,7 +111,7 @@ public class EnemyClick : MonoBehaviour
             CreateItem = new CreateEqItems();
             Debug.Log("Enemy died");
             Destroy(enemy);
-            CreateItem.CreateItem();
+            CreateItem.GenerateChest();
         }
     }
     public void EnemyClickAction(GameObject enemy)

@@ -12,9 +12,12 @@ public class SpawnEnemy : MonoBehaviour
     public GameObject EnemyPrefab;
     public GameObject Player;
 
+    private static GameObject spawnedEnemy;
+
     private void Start()
     {
         dbConnector = GameObject.Find("Las").GetComponent<DBConnector>();
+        if (spawnedEnemy != null) { spawnedEnemy.SetActive(true); };
     }
 
     public void TrySpawnEnemy(int enemyID)
@@ -33,17 +36,38 @@ public class SpawnEnemy : MonoBehaviour
             int DMG = Int32.Parse(dmg);
             //string SpriteName = SelectEnemy[4].ToString();
 
-            GameObject enemy = Instantiate(EnemyPrefab);
-            Enemy enemyScript = enemy.GetComponent<Enemy>();
+            if (spawnedEnemy == null)
+            {
+                //resp przeciwnika
+                GameObject enemy = Instantiate(EnemyPrefab);
+                spawnedEnemy = enemy;
 
-            enemyScript.HP = HP;
-            enemyScript.ID = ID;
-            enemyScript.Name = Name;
-            enemyScript.Damage = DMG;
+                //nie usuwaj przeciwnika
+                DontDestroyOnLoad(spawnedEnemy);
 
-            //nazwa sprite taka jak zwykla nazwa
-            Sprite enemySprite = Resources.Load<Sprite>(Name);
-            enemy.GetComponent<SpriteRenderer>().sprite = enemySprite;
+                Enemy enemyScript = enemy.GetComponent<Enemy>();
+                enemyScript.HP = HP;
+                enemyScript.ID = ID;
+                enemyScript.Name = Name;
+                enemyScript.Damage = DMG;
+
+                Sprite enemySprite = Resources.Load<Sprite>(Name);
+                enemy.GetComponent<SpriteRenderer>().sprite = enemySprite;
+            }
+            else
+            {
+                //jesli juz istnieje to update statow
+                Enemy enemyScript = spawnedEnemy.GetComponent<Enemy>();
+                enemyScript.HP = HP;
+                enemyScript.ID = ID;
+                enemyScript.Name = Name;
+                enemyScript.Damage = DMG;
+            }
         }
+    }
+
+    public void OnDestroy()
+    {
+        if (spawnedEnemy != null) { spawnedEnemy.SetActive(false); };
     }
 }

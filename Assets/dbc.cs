@@ -6,6 +6,7 @@ using UnityEngine.UI;
 
 public class dbc : StateMachineBehaviour
 {
+    public CreateEqItems CreateItem;
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
     //override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     //{
@@ -13,10 +14,15 @@ public class dbc : StateMachineBehaviour
     //}
     public override void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
+        //wywolanie respu itema
+        CreateItem = new CreateEqItems();
+        eqItem item = CreateItem.RespItem();
+
         Debug.Log(stateInfo.ToString());
-        var chest = GameObject.Find("Chest");
+        var chest = GameObject.Find("Chest(Clone)");
         chest.GetComponent<Animator>().enabled = false;
-        chest.GetComponent<Image>().sprite = Resources.Load<Sprite>("rage_rumun");
+        chest.GetComponent<Image>().sprite = Resources.Load<Sprite>("Items/" + item.sprite);
+        Destroy(chest, 5);
     }
 
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
