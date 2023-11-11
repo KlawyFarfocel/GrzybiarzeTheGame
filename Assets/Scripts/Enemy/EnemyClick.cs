@@ -25,14 +25,19 @@ public class EnemyClick : MonoBehaviour
         GameObject D20 = RollHolder.transform.GetChild(0).GetChild(0).gameObject;
 
         isRolling = true;
-
+        System.Random random = new System.Random();
+         rollResult = random.Next(0, 21);
         Animator rollAnim = GameObject.Find("d20").GetComponent<Animator>();
         rollAnim.SetBool("isRunning", true);
         //============TUTAJ DAJ WYNIK Z LOSOWANIA============
-        rollResult = 20; // tutaj ile wypadlo
+       // rollResult = 20; // tutaj ile wypadlo
         Variables.Object(D20).Set("result", rollResult);
         //============TUTAJ DAJ CZY SIE UDA£O CZY NIE============
-        rollEffect = "SUCCESS"; //FAIL albo SUCCESS
+        
+        if(rollResult == 1)
+            rollEffect = "FAIL";
+        else
+            rollEffect = "SUCCESS"; //FAIL albo SUCCESS
         Variables.Object(D20).Set("effect", rollEffect);
 
         
@@ -71,11 +76,11 @@ public class EnemyClick : MonoBehaviour
         {
             if (rollResult == 20)//kryt
             {
-                enemyData.HP -= (int)(playerdata.STR * 1.5f); // do zmiany pewnie
+                enemyData.HP -= (int)(playerdata.STR * (rollResult+2)/10); // do zmiany pewnie
             }
             else
             { //normalny hit
-                enemyData.HP -= playerdata.STR;
+                enemyData.HP -= (int)(playerdata.STR * rollResult / 10);
             }
             playerdata.HandleHealthLoss(1050); // to odejnuje graczowi hp, do obarniecia
         }

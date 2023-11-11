@@ -45,7 +45,11 @@ public class showRollResult : StateMachineBehaviour
                 attackNormal.transform.localPosition = new Vector3(0, 0.2f, 0);
                 attackNormal.transform.localScale = new Vector3(1, 1, 1);
                 attackNormal.GetComponent<RectTransform>().sizeDelta = new Vector2(1.5f, 2);
-                Destroy(attackNormal,0.68f);
+
+                GameObject Enemy = GameObject.Find("Enemy(Clone)");
+                Enemy.GetComponent<EnemyClick>().HandleDMGCalc(Enemy);
+
+                Destroy(attackNormal, 0.68f);
             }
         }
         else //miss
