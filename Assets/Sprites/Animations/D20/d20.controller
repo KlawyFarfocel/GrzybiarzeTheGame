@@ -34,7 +34,10 @@ AnimatorStateTransition:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: 
-  m_Conditions: []
+  m_Conditions:
+  - m_ConditionMode: 2
+    m_ConditionEvent: isRunning
+    m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 2252029655886421556}
   m_Solo: 0
@@ -60,10 +63,10 @@ AnimatorStateMachine:
   m_ChildStates:
   - serializedVersion: 1
     m_State: {fileID: -8218744256618164012}
-    m_Position: {x: 330, y: 130, z: 0}
+    m_Position: {x: 360, y: 410, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 2252029655886421556}
-    m_Position: {x: 620, y: 240, z: 0}
+    m_Position: {x: 630, y: 410, z: 0}
   m_ChildStateMachines: []
   m_AnyStateTransitions: []
   m_EntryTransitions: []
@@ -83,12 +86,12 @@ AnimatorController:
   m_Name: d20
   serializedVersion: 5
   m_AnimatorParameters:
-  - m_Name: LoopCount
-    m_Type: 3
+  - m_Name: isRunning
+    m_Type: 4
     m_DefaultFloat: 0
     m_DefaultInt: 0
-    m_DefaultBool: 0
-    m_Controller: {fileID: 0}
+    m_DefaultBool: 1
+    m_Controller: {fileID: 9100000}
   m_AnimatorLayers:
   - serializedVersion: 5
     m_Name: Base Layer
@@ -141,3 +144,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f21514aad5c41b844926e15af4cdb8ac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  rollResult: 0
+  rollEffect: 

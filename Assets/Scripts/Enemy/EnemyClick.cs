@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -12,21 +13,45 @@ public class EnemyClick : MonoBehaviour
     private LevelManager levelManager;
     private CreateEqItems CreateItem;
 
+    private bool isRolling = false;
+
+    private int rollResult;
+    private string rollEffect;
+
     public void HandleRollAnimation()
     {
         GameObject RollPrefab = Resources.Load<GameObject>("Prefabs/RollHolder");
         GameObject RollHolder = Instantiate(RollPrefab);
         GameObject D20 = RollHolder.transform.GetChild(0).GetChild(0).gameObject;
+
+        isRolling = true;
+
+        Animator rollAnim = GameObject.Find("d20").GetComponent<Animator>();
+        rollAnim.SetBool("isRunning", true);
         //============TUTAJ DAJ WYNIK Z LOSOWANIA============
-        Variables.Object(D20).Set("result", 20);
+        rollResult = 20; // tutaj ile wypadlo
+        Variables.Object(D20).Set("result", rollResult);
         //============TUTAJ DAJ CZY SIE UDA£O CZY NIE============
-        Variables.Object(D20).Set("effect", "FAIL");
+        rollEffect = "SUCCESS"; //FAIL albo SUCCESS
+        Variables.Object(D20).Set("effect", rollEffect);
+
+        
+        rollAnim.SetBool("isRunning", false);
 
         RollHolder.transform.SetParent(GameObject.Find("Las").transform, true);
         RollHolder.transform.localPosition = new Vector3(-250, 350, 0);
         RollHolder.transform.localScale = new Vector3(1, 1, 1);
+
+        Destroy(GameObject.Find("RollHolder(Clone)"),2f);
+        StartCoroutine(WaitForRoll(2));
+
     }
-    public void EnemyClickAction(GameObject enemy)
+    IEnumerator WaitForRoll(int secs) // tutaj w³¹cza mozliwoœæ klikania dopiero po 2 sekundach od wylosowania
+    {
+        yield return new WaitForSeconds(secs);
+        isRolling = false;
+    }
+    public void HandleDMGCalc(GameObject enemy) //tutaj ogarnianie walki
     {
         player = GameObject.Find("emerytka").GetComponent<Player>();
         bgManager = GameObject.Find("Background").GetComponent<BackgroundManager>();
@@ -35,13 +60,29 @@ public class EnemyClick : MonoBehaviour
         Player playerdata = player.GetComponent<Player>();
 
         //testowa wersja walki po kliknieciu odebranie hp 
-     
-            enemyData.HP -= playerdata.STR;
-            HandleRollAnimation();
-            playerdata.HandleHealthLoss(1050);
-            Debug.Log("enemy hp " + enemyData.HP);
-            Debug.Log("player hp " + playerdata.HP);
+
+       
+
+        if (rollEffect == "FAIL") //miss - nie trafiles i chuj //enemy cie uderza tak czy siak
+        {
+            playerdata.HandleHealthLoss(1050); // to odejnuje graczowi hp, do obarniecia
+        }
+        else
+        {
+            if (rollResult == 20)//kryt
+            {
+                enemyData.HP -= (int)(playerdata.STR * 1.5f); // do zmiany pewnie
+            }
+            else
+            { //normalny hit
+                enemyData.HP -= playerdata.STR;
+            }
+            playerdata.HandleHealthLoss(1050); // to odejnuje graczowi hp, do obarniecia
+        }
         
+        Debug.Log("enemy hp " + enemyData.HP);
+        Debug.Log("player hp " + playerdata.HP);
+
 
         if (playerdata.HP <= 0)
         {
@@ -66,6 +107,13 @@ public class EnemyClick : MonoBehaviour
             Debug.Log("Enemy died");
             Destroy(enemy);
             CreateItem.CreateItem();
+        }
+    }
+    public void EnemyClickAction(GameObject enemy)
+    {
+        if (!isRolling) //jak sie rolluje nie da sie klikaæ na enemy
+        {
+            HandleRollAnimation();
         }
     }
 }

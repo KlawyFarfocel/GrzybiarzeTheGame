@@ -18,6 +18,47 @@ public class showRollResult : StateMachineBehaviour
         GameObject.Find("d20").GetComponent<Image>().sprite = Resources.Load<Sprite>(path);
         var DMGPanel = GameObject.Find("DMGPanel").GetComponent<RectTransform>();
         DMGPanel.localPosition = new Vector3(0, -200, 0);
+
+        if(rollEffect == "SUCCESS" ) //trafiony
+        {
+            if (rollResult == 20)//kryt
+            {
+                GameObject attackPrefab = Resources.Load<GameObject>("Prefabs/Attacks/AttackCrit");
+                GameObject attackNormal = Instantiate(attackPrefab);
+
+                attackNormal.transform.SetParent(GameObject.Find("Enemy(Clone)").transform, true);
+                attackNormal.transform.localPosition = new Vector3(0, 0.2f, 0);
+                attackNormal.transform.localScale = new Vector3(1, 1, 1);
+                attackNormal.GetComponent<RectTransform>().sizeDelta = new Vector2(1.5f, 2);
+
+                GameObject Enemy = GameObject.Find("Enemy(Clone)");
+                Enemy.GetComponent<EnemyClick>().HandleDMGCalc(Enemy);
+
+                Destroy(attackNormal, 0.51f);
+            }
+            else //zwykly
+            {
+                GameObject attackPrefab = Resources.Load<GameObject>("Prefabs/Attacks/AttackNormal");
+                GameObject attackNormal = Instantiate(attackPrefab);
+
+                attackNormal.transform.SetParent(GameObject.Find("Enemy(Clone)").transform, true);
+                attackNormal.transform.localPosition = new Vector3(0, 0.2f, 0);
+                attackNormal.transform.localScale = new Vector3(1, 1, 1);
+                attackNormal.GetComponent<RectTransform>().sizeDelta = new Vector2(1.5f, 2);
+                Destroy(attackNormal,0.68f);
+            }
+        }
+        else //miss
+        {
+            GameObject attackPrefab = Resources.Load<GameObject>("Prefabs/Attacks/AttackMiss");
+            GameObject attackNormal = Instantiate(attackPrefab);
+
+            attackNormal.transform.SetParent(GameObject.Find("Enemy(Clone)").transform, true);
+            attackNormal.transform.localPosition = new Vector3(-1f, 0.2f, 0);
+            attackNormal.transform.localScale = new Vector3(1, 1, 1);
+            attackNormal.GetComponent<RectTransform>().sizeDelta = new Vector2(1.5f, 2);
+            Destroy(attackNormal, 0.68f);
+        }
     }
     public override void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {

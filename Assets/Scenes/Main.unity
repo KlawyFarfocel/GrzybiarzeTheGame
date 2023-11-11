@@ -4813,6 +4813,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isNeededToStay: 1
   slots: []
+  Mushrooms: []
+  val: 0
 --- !u!114 &1854961714
 MonoBehaviour:
   m_ObjectHideFlags: 0
