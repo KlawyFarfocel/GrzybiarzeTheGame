@@ -128,8 +128,8 @@ public class CreateEqItems : MonoBehaviour
     {
         GameObject ChestPrefab = Resources.Load<GameObject>("Prefabs/Chest");
         GameObject Chest = Instantiate(ChestPrefab);
-        Chest.transform.SetParent(GameObject.Find("Las").transform,true);
+        Chest.transform.SetParent(GameObject.Find("Las").transform, true);
         Chest.GetComponent<RectTransform>().localPosition = new Vector3(-45, 400, 1);
-        Chest.GetComponent<RectTransform>().localScale=new Vector3(1, 1, 1);
+        Chest.GetComponent<RectTransform>().localScale = new Vector3(1, 1, 1);
     }
 }

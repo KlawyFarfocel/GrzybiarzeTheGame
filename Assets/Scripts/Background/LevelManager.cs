@@ -53,23 +53,26 @@ using UnityEngine;
     }
     public void handleClicks()
         {
-            if(currentClicks<clicksTarget)
-            {
-                currentClicks++;
-            GameObject.Find("SectionText").GetComponent<TextMeshProUGUI>().text = $"Poziom:<br>{currentClicks}/{clicksTarget}";
-            }
-            else
-            {
-                bgManager = GameObject.Find("Background").GetComponent<BackgroundManager>();
-                level++;
-                currentClicks = 0;
-                GameObject.Find("SectionText").GetComponent<TextMeshProUGUI>().text = $"Poziom:<br>{currentClicks}/{clicksTarget}";
-                GameObject.Find("LevelText").GetComponent<TextMeshProUGUI>().text = $"Etap:<br>Las wydmowy";
-            bgManager.changeValues(level);
+            if(GameObject.Find("Enemy(Clone)") == null){
 
-            //po zmianie sceny resp enemy 
-            spawnEnemy = GameObject.Find("EnemySpawner").GetComponent<SpawnEnemy>();
-            spawnEnemy.TrySpawnEnemy(level-1);
-        }
+                if (currentClicks < clicksTarget)
+                {
+                    currentClicks++;
+                    GameObject.Find("SectionText").GetComponent<TextMeshProUGUI>().text = $"Poziom:<br>{currentClicks}/{clicksTarget}";
+                }
+                else
+                {
+                    bgManager = GameObject.Find("Background").GetComponent<BackgroundManager>();
+                    level++;
+                    currentClicks = 0;
+                    GameObject.Find("SectionText").GetComponent<TextMeshProUGUI>().text = $"Poziom:<br>{currentClicks}/{clicksTarget}";
+                    GameObject.Find("LevelText").GetComponent<TextMeshProUGUI>().text = $"Etap:<br>Las wydmowy";
+                    bgManager.changeValues(level);
+
+                    //po zmianie sceny resp enemy 
+                    spawnEnemy = GameObject.Find("EnemySpawner").GetComponent<SpawnEnemy>();
+                    spawnEnemy.TrySpawnEnemy(level + 1);
+                }
+            }     
     }
     }

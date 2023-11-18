@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Data.Common;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -12,8 +13,10 @@ public class EnemyClick : MonoBehaviour
     private BackgroundManager bgManager;
     private LevelManager levelManager;
     private CreateEqItems CreateItem;
-
     private bool isRolling = false;
+
+    private DBConnector dbConnector;
+    public TextEffect textEffect;
 
     private int rollResult;
     private string rollEffect;
@@ -89,15 +92,12 @@ public class EnemyClick : MonoBehaviour
         Debug.Log("player hp " + playerdata.HP);
 
 
-        if (playerdata.HP <= 0)
+        if (playerdata.CURRENT_HP <= 0)
         {
             Debug.Log("YOU DIED");
 
             //usuwanie grzybow 
-            foreach (Slot slot in items.slots)
-            {
-                slot.RemoveItemFromSlot();
-            }
+            items.Clear();
             //ustawienie etapu na 1 
             levelManager = GameObject.Find("LevelManager").GetComponent<LevelManager>();
             levelManager.level = 1;
@@ -111,7 +111,21 @@ public class EnemyClick : MonoBehaviour
             CreateItem = new CreateEqItems();
             Debug.Log("Enemy died");
             Destroy(enemy);
-            CreateItem.GenerateChest();
+            if(enemyData.ID > 2)
+            {
+                CreateItem.GenerateChest();
+            }
+            else
+            {
+                //gold po pokananiu moba
+                dbConnector = GameObject.Find("Las").GetComponent<DBConnector>();
+                string updateQuery = "UPDATE postac SET money = money+40";
+                dbConnector.UpdateDB(updateQuery);
+                // pojawienie siê napisu 
+                textEffect = GameObject.Find("Main Camera").GetComponent<TextEffect>();
+                textEffect.ShowTextEffect("Przeciwnik pokonany!"); 
+            }
+
         }
     }
     public void EnemyClickAction(GameObject enemy)

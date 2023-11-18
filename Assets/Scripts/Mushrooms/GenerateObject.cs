@@ -21,6 +21,7 @@ public class GenerateObject : MonoBehaviour
     private bool isMushroomSpawned = false;
     public GameObject prefab;
     public DBConnector connector;
+    public SpawnEnemy spawnEnemy;
 
     void Start()
     {
@@ -68,21 +69,29 @@ public class GenerateObject : MonoBehaviour
 
     private void SpawnObject(Item item)
     {
+        float averageScale = 0.8f;
         position = new Vector2(Random.Range(MinX, MaxX), Random.Range(MinY, MaxY));
-        activeMushroom = Instantiate(prefab, position, Quaternion.identity);
-        Item itemscript = activeMushroom.GetComponent<Item>();
-        Sprite shroomSprite = Resources.Load<Sprite>(item.sprite);
+        Collider2D overlap = Physics2D.OverlapCircle(position, averageScale);
+        if (overlap == null)
+        {
+            activeMushroom = Instantiate(prefab, position, Quaternion.identity);
+            Item itemscript = activeMushroom.GetComponent<Item>();
+            Sprite shroomSprite = Resources.Load<Sprite>(item.sprite);
 
-        itemscript.ID = item.ID;
-        itemscript.Name = item.Name;
-        itemscript.Sprite = shroomSprite;
-        itemscript.Value = item.Value;
-        itemscript.RespChange = item.RespChange;
+            itemscript.ID = item.ID;
+            itemscript.Name = item.Name;
+            itemscript.Sprite = shroomSprite;
+            itemscript.Value = item.Value;
+            itemscript.RespChange = item.RespChange;
 
-        activeMushroom.GetComponent<SpriteRenderer>().sprite = shroomSprite;
-        activeMushroom.GetComponent<ItemObject>().item = item;
-
-
+            activeMushroom.GetComponent<SpriteRenderer>().sprite = shroomSprite;
+            activeMushroom.GetComponent<ItemObject>().item = item;
+        }
+        else
+        {
+            SpawnObject(item);
+        }
+         
     }
 
     private void TrySpawnObject()
@@ -105,6 +114,20 @@ public class GenerateObject : MonoBehaviour
             }
         }
     }
+
+    private void TrySpawnMob()
+    {
+        spawnEnemy = GameObject.Find("EnemySpawner").GetComponent<SpawnEnemy>();
+        float randomValue = Random.Range(0f, 1f);
+        //2 moby szansa ustawiana tutaj 1%
+        float respchange = 0.01f;
+        if(randomValue < respchange)
+        {
+            int index = Random.Range(0, 3);
+            spawnEnemy.TrySpawnEnemy(index);
+        }
+    }
+
     void Update()
     {
         if (Input.GetMouseButtonDown(0))
@@ -113,12 +136,12 @@ public class GenerateObject : MonoBehaviour
             {
                 clickCount++;
             }
-
+                
             RaycastHit2D hit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(Input.mousePosition), Vector2.zero);
 
             if (hit.collider != null && hit.collider.gameObject == activeMushroom)
             {
-                //activeMushroom.SetActive(false);  
+                activeMushroom.SetActive(false);  
                 isMushroomSpawned = false;
                 Destroy(activeMushroom);
                 TrySpawnObject();
@@ -127,14 +150,15 @@ public class GenerateObject : MonoBehaviour
             else if (activeMushroom != null && clickCount >= 2)
             {
 
-                //activeMushroom.SetActive(false);
+                activeMushroom.SetActive(false);
                 isMushroomSpawned = false;
-                 Destroy(activeMushroom);
+                Destroy(activeMushroom);
                 clickCount = 0;
             }
             else
             {
-               TrySpawnObject();
+                TrySpawnObject();
+                TrySpawnMob();
             }
         }
     }
