@@ -8,6 +8,7 @@ using UnityEngine;
 
     public class LevelManager : MonoBehaviour
     {
+        private bool naTeraz = false;
         public static LevelManager instance;
         public int level;
         public int currentClicks;
@@ -54,11 +55,32 @@ using UnityEngine;
     public void handleClicks()
         {
             if(GameObject.Find("Enemy(Clone)") == null){
+                if (currentClicks == 2)
+                {
+                    var dialogueManager = GameObject.Find("DialogueManager").GetComponent<DialogueManager>();
+                    dialogueManager.ToggleDialoguePanel(true);
+                    dialogueManager.FindDialogue(0);
+                }
 
                 if (currentClicks < clicksTarget)
                 {
-                    currentClicks++;
-                    GameObject.Find("SectionText").GetComponent<TextMeshProUGUI>().text = $"Poziom:<br>{currentClicks}/{clicksTarget}";
+                    if (currentClicks == 3)
+                    {
+                        GameObject.Find("SectionText").GetComponent<TextMeshProUGUI>().text = $"Poziom:<br>{currentClicks}/{clicksTarget}";
+                        currentClicks++;
+                        naTeraz = true;
+                    }
+                    else
+                    {
+                        if (naTeraz)
+                        {
+                            GameObject.Find("SectionText").GetComponent<TextMeshProUGUI>().text = $"Poziom:<br>{currentClicks}/{clicksTarget}";
+                            naTeraz = false;
+                            return;
+                        }
+                        currentClicks++;
+                        GameObject.Find("SectionText").GetComponent<TextMeshProUGUI>().text = $"Poziom:<br>{currentClicks}/{clicksTarget}";
+                    }
                 }
                 else
                 {

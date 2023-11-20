@@ -61,7 +61,7 @@ public class EnemyClick : MonoBehaviour
     }
     public void HandleDMGCalc(GameObject enemy) //tutaj ogarnianie walki
     {
-        player = GameObject.Find("emerytka").GetComponent<Player>();
+        player = GameObject.Find("LevelManager").GetComponent<Player>();
         bgManager = GameObject.Find("Background").GetComponent<BackgroundManager>();
 
         Enemy enemyData = enemy.GetComponent<Enemy>();

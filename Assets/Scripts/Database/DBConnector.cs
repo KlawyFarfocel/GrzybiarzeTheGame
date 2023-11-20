@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Data;
 using UnityEngine;
+using System.IO;
 
 public class DBConnector : MonoBehaviour
 {
@@ -48,7 +49,38 @@ public class DBConnector : MonoBehaviour
         // Jeœli dobrze rozumiem, teraz jak podepniesz skrypt DBConnector to z automatu masz po³¹czenie z baz¹
         // Ogarnijcie sobie skrypt clickOnMainButton - potrzebujesz tylko wiedzieæ do jakiego elementu jest baza podpiêta - a potem juz korzystasz z gotowych funkcji
         //------------------------------- Koniec wstêpu
-        string connection = "URI=file:" + Application.dataPath + "/Database/GrzybiarzeDatabase.db";
+
+        #if UNITY_EDITOR
+            string connection = "URI=file:" + Application.dataPath + "\\StreamingAssets" + "/" + "Database/GrzybiarzeDatabase.db"; //Path to database
+
+#elif UNITY_ANDROID
+string dbName = "GrzybiarzeDatabase.db";
+string dbPath = Path.Combine(Application.streamingAssetsPath, "Database", dbName);
+string destinationPath = Path.Combine(Application.persistentDataPath, dbName);
+
+// Check if the database exists in the destination folder
+if (!File.Exists(destinationPath))
+{
+    // If it doesn't exist, load the file using WWW
+    Debug.Log("Database does not exist in destination. Copying...");
+
+    WWW www = new WWW(dbPath);
+    while (!www.isDone) { /* Wait for the file to be loaded */ }
+
+    // Write the loaded data to the destination path
+    File.WriteAllBytes(destinationPath, www.bytes);
+
+    Debug.Log("Database copied successfully.");
+}
+else
+{
+    Debug.Log("Database already exists in destination. No need to copy.");
+}
+
+string connection = "URI=file:" + destinationPath;
+
+#endif
+        //string connection = "URI=file:" + Application.dataPath + "/Database/GrzybiarzeDatabase.db";
         dbcon = new SqliteConnection(connection);
         dbcon.Open();
         //------------------------------ SELECT i wyswietlanie

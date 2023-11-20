@@ -1,13 +1,6 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using System.Data;
-using System.Data.Common;
 using UnityEngine;
-using UnityEngine.SceneManagement;
-using UnityEngine.UIElements;
-using static UnityEditor.Progress;
-using static UnityEngine.EventSystems.EventTrigger;
 
 public class CreateEqItems : MonoBehaviour
 {

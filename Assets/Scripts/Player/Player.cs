@@ -30,6 +30,10 @@ public class Player : MonoBehaviour
             instance = this;
             DontDestroyOnLoad(this);
         }
+        else
+        {
+            Destroy(this);
+        }
     }
 
     public void Start()
@@ -75,6 +79,7 @@ public class Player : MonoBehaviour
 
     public void LoadPlayerData()
     {
+        Debug.Log("Load Load");
         dbConnector = GameObject.Find("Las").GetComponent<DBConnector>();
         IDataReader SelectPlayer = dbConnector.Select("SELECT hp,armor,str,vit,dex,luck FROM postac");
         while (SelectPlayer.Read())
@@ -94,7 +99,7 @@ public class Player : MonoBehaviour
 
 
             this.HP = HP * VIT * 10;
-            this.CURRENT_HP = HP * VIT * 10;
+            this.CURRENT_HP = this.HP;
             this.ARMOR = ARMOR;
             this.STR = STR;
             this.VIT = VIT;

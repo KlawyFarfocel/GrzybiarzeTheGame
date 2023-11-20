@@ -1,7 +1,4 @@
-using JetBrains.Annotations;
-using System.IO;
 using UnityEngine;
-using static UnityEditor.Progress;
 
 public class SlotManager : MonoBehaviour
 {
