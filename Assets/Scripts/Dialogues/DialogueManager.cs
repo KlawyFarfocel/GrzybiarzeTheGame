@@ -50,6 +50,18 @@ public class DialogueManager : MonoBehaviour
         }
         HandleDialogueChange(portaitSpriteList[0], dialogueTextList[0], talkingPersonList[0]); //odpala dialog
     }
+    public void FindDialogue(string scene_id) //stringi s¹ do bossów
+    {
+        DBConnector dbCon = GameObject.Find("Main Camera").GetComponent<DBConnector>();
+        IDataReader getDialogues = dbCon.Select($"SELECT talkingPerson,dialogueText,portraitSprite FROM dialogues WHERE scene_id='{scene_id}' ORDER BY seq_number");
+        while (getDialogues.Read())
+        {
+            talkingPersonList.Add("[" + getDialogues[0].ToString() + "]");
+            dialogueTextList.Add(getDialogues[1].ToString());
+            portaitSpriteList.Add(getDialogues[2].ToString());
+        }
+        HandleDialogueChange(portaitSpriteList[0], dialogueTextList[0], talkingPersonList[0]); //odpala dialog
+    }
     public void GoToNextLine()
     {
         seq_number++;
@@ -60,6 +72,10 @@ public class DialogueManager : MonoBehaviour
         else
         {
             ToggleDialoguePanel(false);
+            portaitSpriteList.Clear();
+            dialogueTextList.Clear();
+            talkingPersonList.Clear();
+            seq_number = 0;
         }
     }
 }

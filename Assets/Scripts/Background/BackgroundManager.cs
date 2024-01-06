@@ -6,6 +6,7 @@ using System.Data.Common;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 using UnityEngine.VFX;
 using static UnityEngine.EventSystems.EventTrigger;
 
@@ -36,7 +37,7 @@ public class BackgroundManager : MonoBehaviour
             float posY = float.Parse(SelectBG[3].ToString());
             float scaleX = float.Parse(SelectBG[4].ToString());
             float scaleY = float.Parse(SelectBG[5].ToString());
-
+            string levelText = SelectBG[6].ToString();
             Sprite BGSprite = Resources.Load<Sprite>(sprite);
             background.GetComponent<SpriteRenderer>().sprite = BGSprite;    
 
@@ -44,6 +45,8 @@ public class BackgroundManager : MonoBehaviour
             Vector3 newScale = new Vector3(scaleX, scaleY, -250);
             background.GetComponent<Transform>().localPosition = newPosition;
             background.GetComponent<Transform>().localScale = newScale;
+
+            GameObject.Find("LevelText").GetComponent<TextMeshProUGUI>().text = $"Etap:<br>{levelText}";
         }
         IDataReader SelectClicks = dbCon.Select($"SELECT click_count FROM spot WHERE spot_id = {level}");
         while (SelectClicks.Read())

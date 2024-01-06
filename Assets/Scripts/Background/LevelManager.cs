@@ -55,7 +55,7 @@ using UnityEngine;
     public void handleClicks()
         {
             if(GameObject.Find("Enemy(Clone)") == null){
-                if (currentClicks == 2)
+                if (currentClicks == 2 && level==1)
                 {
                     var dialogueManager = GameObject.Find("DialogueManager").GetComponent<DialogueManager>();
                     dialogueManager.ToggleDialoguePanel(true);
@@ -79,7 +79,12 @@ using UnityEngine;
                             return;
                         }
                         currentClicks++;
+                    try
+                    {
                         GameObject.Find("SectionText").GetComponent<TextMeshProUGUI>().text = $"Poziom:<br>{currentClicks}/{clicksTarget}";
+                    }
+                    catch { }
+                        
                     }
                 }
                 else
@@ -88,11 +93,15 @@ using UnityEngine;
                     level++;
                     currentClicks = 0;
                     GameObject.Find("SectionText").GetComponent<TextMeshProUGUI>().text = $"Poziom:<br>{currentClicks}/{clicksTarget}";
-                    GameObject.Find("LevelText").GetComponent<TextMeshProUGUI>().text = $"Etap:<br>Las wydmowy";
                     bgManager.changeValues(level);
 
                     //po zmianie sceny resp enemy 
-                    spawnEnemy = GameObject.Find("EnemySpawner").GetComponent<SpawnEnemy>();
+                    //odpal dialog z enemy
+                    DialogueManager dialogueManager=GameObject.Find("DialogueManager").GetComponent<DialogueManager>();
+                    dialogueManager.ToggleDialoguePanel(true);
+                    dialogueManager.FindDialogue("b"+level);
+
+                spawnEnemy = GameObject.Find("EnemySpawner").GetComponent<SpawnEnemy>();
                     spawnEnemy.TrySpawnEnemy(level + 1);
                 }
             }     
