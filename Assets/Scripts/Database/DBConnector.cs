@@ -37,7 +37,15 @@ public class DBConnector : MonoBehaviour
     }
     private void OnDestroy()
     {
-        dbcon.Close();
+        try
+        {
+            dbcon.Close();
+        }
+        catch
+        {
+
+        }
+        
     }
     public void Close()
     {

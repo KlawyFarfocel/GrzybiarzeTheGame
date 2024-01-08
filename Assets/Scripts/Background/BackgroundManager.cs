@@ -20,7 +20,7 @@ public class BackgroundManager : MonoBehaviour
 
     void Start()
     {
-        dbCon = GameObject.Find("Main Camera").GetComponent<DBConnector>();
+        dbCon = GameObject.Find("LevelManager").GetComponent<DBConnector>();
         background = GameObject.Find("Background");
         levelManager = GameObject.Find("LevelManager").GetComponent<LevelManager>();
         spawnEnemy = new SpawnEnemy();
@@ -46,7 +46,7 @@ public class BackgroundManager : MonoBehaviour
             background.GetComponent<Transform>().localPosition = newPosition;
             background.GetComponent<Transform>().localScale = newScale;
 
-            GameObject.Find("LevelText").GetComponent<TextMeshProUGUI>().text = $"Etap:<br>{levelText}";
+                GameObject.Find("LevelText").GetComponent<TextMeshProUGUI>().text = $"Etap:<br>{levelText}";      
         }
         IDataReader SelectClicks = dbCon.Select($"SELECT click_count FROM spot WHERE spot_id = {level}");
         while (SelectClicks.Read())

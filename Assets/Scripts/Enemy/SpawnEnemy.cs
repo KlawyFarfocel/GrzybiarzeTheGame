@@ -22,7 +22,7 @@ public class SpawnEnemy : MonoBehaviour
 
     public void TrySpawnEnemy(int enemyID)
     {
-        dbConnector = GameObject.Find("Las").GetComponent<DBConnector>();
+        dbConnector = GameObject.Find("DialogueManager").GetComponent<DBConnector>();
 
         IDataReader SelectEnemy = dbConnector.Select($"SELECT * FROM enemy WHERE Id = {enemyID}");
         while (SelectEnemy.Read())

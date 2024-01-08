@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class DialogueManager : MonoBehaviour
@@ -21,9 +22,33 @@ public class DialogueManager : MonoBehaviour
     public GameObject LinesController;
 
     public GameObject SectionText;
-    public void Start()
+    private void Awake()
     {
+        if (instance == null)
+        {
+            instance = this;
+            DontDestroyOnLoad(transform.root.gameObject);
+        }
+        else
+        {
+            Destroy(transform.root.gameObject);
+        }
 
+    }
+    private void AttachTopPanel(Scene scene, LoadSceneMode mode)
+    {
+        try
+        {
+            this.TopPanel = GameObject.Find("TopPanel");
+        }
+        catch
+        {
+
+        }
+    }
+    private void OnEnable()
+    {
+        SceneManager.sceneLoaded += AttachTopPanel;
     }
     public void HandleDialogueChange(string spritePath,string dialogueText, string dialoguePerson)
     {
@@ -37,6 +62,15 @@ public class DialogueManager : MonoBehaviour
         MoveToNextDialogueText.SetActive(state);
         LinesController.SetActive(state);
         TopPanel.SetActive(!state);
+        try
+        {
+            LevelManager lvlManager=GameObject.Find("LevelManager").GetComponent<LevelManager>();
+            GameObject.Find("SectionText").GetComponent<TextMeshProUGUI>().text = $"Poziom:<br>{lvlManager.currentClicks}/{lvlManager.clicksTarget}";
+        }
+        catch
+        {
+
+        }
     }
     public void FindDialogue(int scene_id)
     {
@@ -52,7 +86,7 @@ public class DialogueManager : MonoBehaviour
     }
     public void FindDialogue(string scene_id) //stringi s¹ do bossów
     {
-        DBConnector dbCon = GameObject.Find("Main Camera").GetComponent<DBConnector>();
+        DBConnector dbCon = GameObject.Find("DialogueManager").GetComponent<DBConnector>();
         IDataReader getDialogues = dbCon.Select($"SELECT talkingPerson,dialogueText,portraitSprite FROM dialogues WHERE scene_id='{scene_id}' ORDER BY seq_number");
         while (getDialogues.Read())
         {

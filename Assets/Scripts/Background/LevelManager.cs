@@ -5,14 +5,16 @@ using System.Data;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
-    public class LevelManager : MonoBehaviour
+public class LevelManager : MonoBehaviour
     {
         private bool naTeraz = false;
         public static LevelManager instance;
         public int level;
         public int currentClicks;
         public int clicksTarget;
+        public bool wasOnMap;
          private BackgroundManager bgManager;
     public SpawnEnemy spawnEnemy;
     // Start is called before the first frame update
@@ -34,11 +36,32 @@ using UnityEngine;
 
         return null;
     }
+    private void BackFromMap(Scene scene, LoadSceneMode mode)
+    {
+        if (wasOnMap)
+        {
+            DialogueManager dialogueManager = GameObject.Find("DialogueManager").GetComponent<DialogueManager>();
+            dialogueManager.ToggleDialoguePanel(true);
+            dialogueManager.FindDialogue("b" + level);
 
+           
+
+            spawnEnemy = GameObject.Find("EnemySpawner").GetComponent<SpawnEnemy>();
+            spawnEnemy.TrySpawnEnemy(level + 1);
+            wasOnMap = false;
+        }
+    }
+    private void OnEnable()
+    {
+        SceneManager.sceneLoaded += BackFromMap;
+    }
     void Start()
     {
-        level = 1;
-        currentClicks = 0;
+        if(!wasOnMap)
+        {
+            level = 1;
+            currentClicks = 0;
+        }
     }
     private void Awake()
     {
@@ -51,6 +74,21 @@ using UnityEngine;
         {
             Destroy(transform.root.gameObject);
         }
+
+    }
+    IEnumerator LoadSceneWithAnimation()
+    {
+        // Find the LoadingScreen GameObject and get its Animation component
+        Animation loadingScreenAnimation = GameObject.Find("LoadingScreen").GetComponent<Animation>();
+
+        // Play the fade animation
+        loadingScreenAnimation.Play();
+
+        // Wait for the animation to finish
+        yield return new WaitForSeconds(loadingScreenAnimation.clip.length-0.03f);
+
+        // Load the next scene
+        SceneManager.LoadScene(6);
     }
     public void handleClicks()
         {
@@ -92,18 +130,10 @@ using UnityEngine;
                     bgManager = GameObject.Find("Background").GetComponent<BackgroundManager>();
                     level++;
                     currentClicks = 0;
+                    GameObject.Find("LoadingScreen").GetComponent<Animation>().Play();
                     GameObject.Find("SectionText").GetComponent<TextMeshProUGUI>().text = $"Poziom:<br>{currentClicks}/{clicksTarget}";
-                    bgManager.changeValues(level);
-
-                    //po zmianie sceny resp enemy 
-                    //odpal dialog z enemy
-                    DialogueManager dialogueManager=GameObject.Find("DialogueManager").GetComponent<DialogueManager>();
-                    dialogueManager.ToggleDialoguePanel(true);
-                    dialogueManager.FindDialogue("b"+level);
-
-                spawnEnemy = GameObject.Find("EnemySpawner").GetComponent<SpawnEnemy>();
-                    spawnEnemy.TrySpawnEnemy(level + 1);
-                }
+                    StartCoroutine(LoadSceneWithAnimation());
+            }
             }     
     }
     }

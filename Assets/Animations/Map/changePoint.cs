@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Rendering;
+using UnityEngine.SceneManagement;
 
 public class changePoint : StateMachineBehaviour
 {
@@ -27,10 +28,6 @@ public class changePoint : StateMachineBehaviour
         {
             targetAnimation.Play(animationName);
             playCounter++;
-        }
-        else
-        {
-            animator.SetBool("hasPlayed", true);
         }
         
     }
