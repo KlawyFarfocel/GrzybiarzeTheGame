@@ -98,7 +98,7 @@ public class Player : MonoBehaviour
             int LUCK = Int32.Parse(luck);
 
 
-            this.HP = HP * VIT * 10;
+            this.HP = VIT * 10;
             this.CURRENT_HP = this.HP;
             this.ARMOR = ARMOR;
             this.STR = STR;
@@ -110,7 +110,6 @@ public class Player : MonoBehaviour
     }
     public void AddStats(eqItem item)
     {
-        Debug.Log("Armor" + item.armor);
         if (item.armor != 0 ) { this.ARMOR += item.armor; }
         if (item.mod_1 != 0) { this.VIT += item.mod_1_val; }
         if (item.mod_2 != 0) { this.DEX += item.mod_2_val; }

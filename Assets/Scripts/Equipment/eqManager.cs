@@ -11,9 +11,6 @@ using TMPro;
 
 public class eqManager : MonoBehaviour
 {
-    private bool addedCallbackToWearButton = false;
-    private bool addedCallbackToCancelButton=false;
-
     public Player playerData;
 
     public List<int> allCollectedItemsIdList= new();
@@ -82,7 +79,6 @@ public class eqManager : MonoBehaviour
             foreach (int item in allCollectedItemsIdOfType)//Tworzenie slotów
             {
                 eqItem eqItem = allCollectedItems.Find(collectedItem => collectedItem.eq_id == item);
-                Debug.Log(allCollectedItems[0].eq_id);
                 GameObject slotPrefab = Resources.Load<GameObject>("Prefabs/Slot");
 
                 GameObject createdSlot = Instantiate(slotPrefab);
@@ -105,19 +101,19 @@ public class eqManager : MonoBehaviour
                 pointerClickEntry.callback.AddListener((eventData) => clickEvent.Invoke());
                 createdSlot.GetComponent<EventTrigger>().triggers.Add(pointerClickEntry);
             }
-            //Klikniêcie na item w menu obs³uguje HandleMenuItemsClick()
+            //Klikniêcie na item w menu obs³uguje HandleMenuItemClick()
             
         }
         else  // jak ma sprite -> najpierw zdejmij item
         {// zdejmij item
             eqItem itemToRemove = allCollectedItems.FirstOrDefault(item => item.sprite == slot.GetComponent<Image>().sprite.name); //
-            Debug.Log("id itema " + itemToRemove.slot_id);
             /*int unequippedItemId= equippedItemsIdList.Find(id => id == itemToRemove.slot_id);
             Debug.Log(unequippedItemId);*/
 
             //odejmowanie statow
             playerData.RemoveStats(itemToRemove);
-
+            GameObject.Find("Main").GetComponent<Load>().EvaluateHPPoints();
+            GameObject.Find("Main").GetComponent<Load>().ForceUpdateStatTexts();
             equippedItemsIdList[itemToRemove.slot_id - 1] = -1; // -1 oznacza ze nie ma zalozonego itema
             slot.GetComponent<Image>().sprite = null;
             DeleteObsoleteSlots();
@@ -137,35 +133,48 @@ public class eqManager : MonoBehaviour
         }
 
     }
+    private void handleItemWear(int item_id,int slot_id)
+    {
+        equippedItemsIdList[slot_id - 1] = item_id;
+    }
     public void HandleMenuItemClick(GameObject slot, GameObject itemFrame)//klikanie juz na item w menu zeby ubraæ
     {
         int item_id = int.Parse(Variables.Object(slot).Get("item_id").ToString());
-        int slot_id = int.Parse(Variables.Object(itemFrame).Get("slot_id").ToString());
-        itemFrame.GetComponent<Image>().sprite = Resources.Load<Sprite>("Items/" + allCollectedItems[item_id - 1].sprite);
-        equippedItemsIdList[slot_id - 1] = item_id;
+        
+        eqItem item=allCollectedItems.Find(item => item.eq_id== item_id);
+        int slot_id = item.slot_id;
+        itemFrame.GetComponent<Image>().sprite = Resources.Load<Sprite>("Items/" + item.sprite);
+
 
         //otworz menu ze statystykami
         itemStatsPanel.SetActive(true);
-        GameObject.Find("ItemImage").GetComponent<Image>().sprite = Resources.Load<Sprite>("Items/" + allCollectedItems[item_id - 1].sprite);
-        GameObject.Find("ItemTitle").GetComponent<TextMeshProUGUI>().text = allCollectedItems[item_id - 1].name;
-        GameObject.Find("DescriptionText").GetComponent<TextMeshProUGUI>().text = allCollectedItems[item_id - 1].desc;
+        GameObject.Find("ItemImage").GetComponent<Image>().sprite = Resources.Load<Sprite>("Items/" + item.sprite);
+        GameObject.Find("ItemTitle").GetComponent<TextMeshProUGUI>().text = item.name;
+        GameObject.Find("DescriptionText").GetComponent<TextMeshProUGUI>().text = item.desc;
 
-        GameObject.Find("WIT-Value").GetComponent<TextMeshProUGUI>().text = "+" + allCollectedItems[item_id - 1].mod_1_val;
-        GameObject.Find("DEX-Value").GetComponent<TextMeshProUGUI>().text = "+" + allCollectedItems[item_id - 1].mod_2_val;
-        GameObject.Find("STR-Value").GetComponent<TextMeshProUGUI>().text = "+" + allCollectedItems[item_id - 1].mod_3_val;
-        GameObject.Find("LUCK-Value").GetComponent<TextMeshProUGUI>().text = "+" + allCollectedItems[item_id - 1].mod_4_val;
-        GameObject.Find("ARM-Value").GetComponent<TextMeshProUGUI>().text = "+" + allCollectedItems[item_id - 1].armor;
+        GameObject.Find("WIT-Value").GetComponent<TextMeshProUGUI>().text = "+" + item.mod_1_val;
+        GameObject.Find("DEX-Value").GetComponent<TextMeshProUGUI>().text = "+" + item.mod_2_val;
+        GameObject.Find("STR-Value").GetComponent<TextMeshProUGUI>().text = "+" + item.mod_3_val;
+        GameObject.Find("LUCK-Value").GetComponent<TextMeshProUGUI>().text = "+" + item.mod_4_val;
+        GameObject.Find("ARM-Value").GetComponent<TextMeshProUGUI>().text = "+" + item.armor;
 
 
         //Jak klikniesz w zaloz to normalna funkcja
-        if (!addedCallbackToWearButton)
-        {
+
             UnityEvent clickEvent = new UnityEvent();
+            
             clickEvent.AddListener(() =>
             {
+                equippedItemsIdList[slot_id - 1] = item_id;
+                itemFrame.SetActive(true);
+                playerData.AddStats(item);
+                GameObject.Find("Main").GetComponent<Load>().EvaluateHPPoints();
+                GameObject.Find("Main").GetComponent<Load>().ForceUpdateStatTexts();
                 itemStatsPanel.SetActive(false);
-                playerData.AddStats(allCollectedItems[item_id - 1]);
                 DeleteObsoleteSlots(); //usuwanie itemow
+                clickEvent.RemoveAllListeners();
+
+
             });
             EventTrigger.Entry pointerClickEntry = new EventTrigger.Entry
             {
@@ -174,11 +183,8 @@ public class eqManager : MonoBehaviour
             pointerClickEntry.callback.AddListener((eventData) => clickEvent.Invoke());
             GameObject.Find("WearButton").GetComponent<EventTrigger>().triggers.Add(pointerClickEntry);
 
-            addedCallbackToWearButton = true;
-        }
-        if (!addedCallbackToCancelButton)
-        {
             UnityEvent cancelEvent = new UnityEvent();
+            cancelEvent.RemoveAllListeners();
             cancelEvent.AddListener(() =>
             {
                 itemStatsPanel.SetActive(false);
@@ -190,11 +196,6 @@ public class eqManager : MonoBehaviour
 
             pointerClickEntry2.callback.AddListener((eventData) => cancelEvent.Invoke());
             GameObject.Find("CancelButton").GetComponent<EventTrigger>().triggers.Add(pointerClickEntry2);
-
-            addedCallbackToCancelButton = true;
-        }
-
-
     }
 
     void Start()
