@@ -112,7 +112,7 @@ public class CreateEqItems : MonoBehaviour
 
 
             //narazie wy³¹czone ¿eby nie dodawa³o do bazy
-            //dbConnector.Insert($"Insert INTO all_eq(item_id,slot_id) VALUES({ID} , {S_ID})");
+            dbConnector.Insert($"Insert INTO all_eq(item_id,slot_id) VALUES({ID} , {S_ID})");
         }
         return (item);
     }

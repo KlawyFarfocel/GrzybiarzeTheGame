@@ -23,4 +23,6 @@ public class eqItem : MonoBehaviour
 
     public int mod_4;
     public int mod_4_val;
+
+    public string desc;
 }

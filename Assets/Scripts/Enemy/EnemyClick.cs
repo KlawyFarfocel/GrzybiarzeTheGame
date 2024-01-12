@@ -29,7 +29,7 @@ public class EnemyClick : MonoBehaviour
 
         isRolling = true;
         System.Random random = new System.Random();
-         rollResult = random.Next(0, 21);
+         rollResult = random.Next(1, 21);
         Animator rollAnim = GameObject.Find("d20").GetComponent<Animator>();
         rollAnim.SetBool("isRunning", true);
         //============TUTAJ DAJ WYNIK Z LOSOWANIA============

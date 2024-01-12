@@ -7,9 +7,13 @@ using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine.EventSystems;
 using UnityEngine.Events;
+using TMPro;
 
 public class eqManager : MonoBehaviour
 {
+    private bool addedCallbackToWearButton = false;
+    private bool addedCallbackToCancelButton=false;
+
     public Player playerData;
 
     public List<int> allCollectedItemsIdList= new();
@@ -18,6 +22,7 @@ public class eqManager : MonoBehaviour
     public List<int> equippedItemsIdList = new();
     public List<string> allItemsNameList = new();
     public GameObject itemsMenuPopup;
+    public GameObject itemStatsPanel;
     // Start is called before the first frame update
     string generateINQuery(string query, List<int> inList)
     {
@@ -132,18 +137,64 @@ public class eqManager : MonoBehaviour
         }
 
     }
-    public void HandleMenuItemClick(GameObject slot,GameObject itemFrame)//klikanie juz na item w menu zeby ubraæ
+    public void HandleMenuItemClick(GameObject slot, GameObject itemFrame)//klikanie juz na item w menu zeby ubraæ
     {
         int item_id = int.Parse(Variables.Object(slot).Get("item_id").ToString());
         int slot_id = int.Parse(Variables.Object(itemFrame).Get("slot_id").ToString());
         itemFrame.GetComponent<Image>().sprite = Resources.Load<Sprite>("Items/" + allCollectedItems[item_id - 1].sprite);
-        equippedItemsIdList[slot_id-1]= item_id;
-        
-        //dodawanie statow
-        playerData.AddStats(allCollectedItems[item_id - 1]);
+        equippedItemsIdList[slot_id - 1] = item_id;
 
-        //usuwanie wszystkich itemow
-        DeleteObsoleteSlots();
+        //otworz menu ze statystykami
+        itemStatsPanel.SetActive(true);
+        GameObject.Find("ItemImage").GetComponent<Image>().sprite = Resources.Load<Sprite>("Items/" + allCollectedItems[item_id - 1].sprite);
+        GameObject.Find("ItemTitle").GetComponent<TextMeshProUGUI>().text = allCollectedItems[item_id - 1].name;
+        GameObject.Find("DescriptionText").GetComponent<TextMeshProUGUI>().text = allCollectedItems[item_id - 1].desc;
+
+        GameObject.Find("WIT-Value").GetComponent<TextMeshProUGUI>().text = "+" + allCollectedItems[item_id - 1].mod_1_val;
+        GameObject.Find("DEX-Value").GetComponent<TextMeshProUGUI>().text = "+" + allCollectedItems[item_id - 1].mod_2_val;
+        GameObject.Find("STR-Value").GetComponent<TextMeshProUGUI>().text = "+" + allCollectedItems[item_id - 1].mod_3_val;
+        GameObject.Find("LUCK-Value").GetComponent<TextMeshProUGUI>().text = "+" + allCollectedItems[item_id - 1].mod_4_val;
+        GameObject.Find("ARM-Value").GetComponent<TextMeshProUGUI>().text = "+" + allCollectedItems[item_id - 1].armor;
+
+
+        //Jak klikniesz w zaloz to normalna funkcja
+        if (!addedCallbackToWearButton)
+        {
+            UnityEvent clickEvent = new UnityEvent();
+            clickEvent.AddListener(() =>
+            {
+                itemStatsPanel.SetActive(false);
+                playerData.AddStats(allCollectedItems[item_id - 1]);
+                DeleteObsoleteSlots(); //usuwanie itemow
+            });
+            EventTrigger.Entry pointerClickEntry = new EventTrigger.Entry
+            {
+                eventID = EventTriggerType.PointerClick
+            };
+            pointerClickEntry.callback.AddListener((eventData) => clickEvent.Invoke());
+            GameObject.Find("WearButton").GetComponent<EventTrigger>().triggers.Add(pointerClickEntry);
+
+            addedCallbackToWearButton = true;
+        }
+        if (!addedCallbackToCancelButton)
+        {
+            UnityEvent cancelEvent = new UnityEvent();
+            cancelEvent.AddListener(() =>
+            {
+                itemStatsPanel.SetActive(false);
+            });
+            EventTrigger.Entry pointerClickEntry2 = new EventTrigger.Entry
+            {
+                eventID = EventTriggerType.PointerClick
+            };
+
+            pointerClickEntry2.callback.AddListener((eventData) => cancelEvent.Invoke());
+            GameObject.Find("CancelButton").GetComponent<EventTrigger>().triggers.Add(pointerClickEntry2);
+
+            addedCallbackToCancelButton = true;
+        }
+
+
     }
 
     void Start()
@@ -211,6 +262,16 @@ public class eqManager : MonoBehaviour
             }
             eqItem.name = getAllCollectedItemsData[11].ToString();
             eqItem.sprite= getAllCollectedItemsData[12].ToString();
+
+            if (getAllCollectedItemsData[13] != DBNull.Value)
+            {
+                eqItem.desc = getAllCollectedItemsData[13].ToString();
+            }
+            else
+            {
+                eqItem.desc = "";
+            }
+
 
             allCollectedItems.Add(eqItem);
         }

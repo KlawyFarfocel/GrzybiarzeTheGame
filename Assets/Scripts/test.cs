@@ -5,16 +5,8 @@ using UnityEngine;
 
 public class test : MonoBehaviour
 {
-    public DBConnector dbConnector;
-    public void Start()
+   public void Dupa()
     {
-        dbConnector = GameObject.Find("DBHandler").GetComponent<DBConnector>();
-    }
-    private void Update()
-    {
-        if(dbConnector.dbcon!=null) 
-        {
-            dbConnector = GameObject.Find("DBHandler").GetComponent<DBConnector>();
-        }
+        Debug.Log("Dupa");
     }
 }
