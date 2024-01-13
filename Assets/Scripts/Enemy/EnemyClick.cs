@@ -86,29 +86,53 @@ public class EnemyClick : MonoBehaviour
         Player playerdata = player.GetComponent<Player>();
 
         //testowa wersja walki po kliknieciu odebranie hp 
-
-       
-
+        double zmienna = 0;
+       if(playerdata.ARMOR<1500)
+        {
+            zmienna = 0.90;
+        }
+        if (playerdata.ARMOR < 3500 && playerdata.ARMOR>1500)
+        {
+            zmienna = 0.80;
+        }
+        if (playerdata.ARMOR < 5000 && playerdata.ARMOR > 3500)
+        {
+            zmienna = 0.70;
+        }
+        if (playerdata.ARMOR < 8000 && playerdata.ARMOR > 5000)
+        {
+            zmienna = 0.60;
+        }
+        if (playerdata.ARMOR >8000)
+        {
+            zmienna = 0.40;
+        }
         if (rollEffect == "FAIL") //miss - nie trafiles i chuj //enemy cie uderza tak czy siak
         {
-            playerdata.HandleHealthLoss(100); // to odejnuje graczowi hp, do obarniecia
+            playerdata.HandleHealthLoss(enemyData.Damage); // to odejnuje graczowi hp, do obarniecia
         }
         else
         {
             if (rollResult == 20)//kryt
             {
-                enemyData.HP -= (int)(playerdata.STR * (rollResult+2)/10)*150; // do zmiany pewnie //wyjebac 150 bo bylo do testowania
+                enemyData.HP -= (int)(playerdata.STR * (rollResult+2)/10); // do zmiany pewnie //wyjebac 150 bo bylo do testowania
             }
             else
             { //normalny hit
-                enemyData.HP -= (int)(playerdata.STR * rollResult / 10)*150; //wyjebac 150 bo bylo do testowania
+                enemyData.HP -= (int)(playerdata.STR * rollResult / 10); //wyjebac 150 bo bylo do testowania
             }
-            playerdata.HandleHealthLoss(100); // to odejnuje graczowi hp, do obarniecia
+            if(enemyData.HP > 1)
+            playerdata.HandleHealthLoss((int)((double)enemyData.Damage*zmienna)); // to odejnuje graczowi hp, do obarniecia
         }
-        
+        // 8k to 50 % redukcji dmg i to jest cap
+        // 5k to 30 % redukcji i to jest soft cap
+        // 3.5-5k to 20 % redukcji
+        // 1.5-3.5k to 15% redukcji
+        // <1.5k to 5% redukcji
         Debug.Log("enemy hp " + enemyData.HP);
+        Debug.Log("enemy str " + playerdata.ARMOR);
         Debug.Log("player hp " + playerdata.HP);
-
+        Debug.Log(zmienna);
 
 
 
