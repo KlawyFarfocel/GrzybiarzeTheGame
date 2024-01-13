@@ -36,6 +36,8 @@ public class SpawnEnemy : MonoBehaviour
             int DMG = Int32.Parse(dmg);
             //string SpriteName = SelectEnemy[4].ToString();
 
+            GameObject enemyOnMap = GameObject.Find("Enemy(Clone)");
+
             if (spawnedEnemy == null)
             {
                 //resp przeciwnika
@@ -50,11 +52,10 @@ public class SpawnEnemy : MonoBehaviour
                 enemyScript.ID = ID;
                 enemyScript.Name = Name;
                 enemyScript.Damage = DMG;
-
                 Sprite enemySprite = Resources.Load<Sprite>(Name);
                 enemy.GetComponent<SpriteRenderer>().sprite = enemySprite;
             }
-            else
+            else if(enemyOnMap==null)
             {
                 //jesli juz istnieje to update statow
                 Enemy enemyScript = spawnedEnemy.GetComponent<Enemy>();
@@ -63,6 +64,7 @@ public class SpawnEnemy : MonoBehaviour
                 enemyScript.Name = Name;
                 enemyScript.Damage = DMG;
             }
+
         }
     }
 
