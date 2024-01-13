@@ -120,7 +120,7 @@ public class GenerateObject : MonoBehaviour
         spawnEnemy = GameObject.Find("EnemySpawner").GetComponent<SpawnEnemy>();
         float randomValue = Random.Range(0f, 1f);
         //2 moby szansa ustawiana tutaj 1%
-        float respchange = 0.01f;
+        float respchange = 0.15f;
         if(randomValue < respchange)
         {
             int index = Random.Range(0, 3);

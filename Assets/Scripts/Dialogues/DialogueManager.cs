@@ -94,7 +94,11 @@ public class DialogueManager : MonoBehaviour
             dialogueTextList.Add(getDialogues[1].ToString());
             portaitSpriteList.Add(getDialogues[2].ToString());
         }
-        HandleDialogueChange(portaitSpriteList[0], dialogueTextList[0], talkingPersonList[0]); //odpala dialog
+        if(dialogueTextList.Count > 0)
+        {
+            HandleDialogueChange(portaitSpriteList[0], dialogueTextList[0], talkingPersonList[0]); //odpala dialog
+        }
+        
     }
     public void GoToNextLine()
     {

@@ -34,7 +34,7 @@ public class CreateEqItems : MonoBehaviour
 
     public eqItem RespItem()
     {
-        dbConnector = GameObject.Find("Las").GetComponent<DBConnector>();
+        dbConnector = GameObject.Find("DialogueManager").GetComponent<DBConnector>();
         IDataReader GetItemsCount = dbConnector.Select("Select count(*) FROM eq");
         string Count = GetItemsCount[0].ToString();
         int ItemCount = Int32.Parse(Count);
@@ -44,6 +44,8 @@ public class CreateEqItems : MonoBehaviour
 
         eqItem item = new eqItem();
         IDataReader createItem = dbConnector.Select($"SELECT * FROM eq WHERE eq_id = {RandomIndex}");
+        int itemSlot_id=0;
+        int item_id=0;
         while (createItem.Read())
         {
             string id = createItem[0].ToString();
@@ -110,10 +112,13 @@ public class CreateEqItems : MonoBehaviour
             CreatedItem.GetComponent<SpriteRenderer>().sortingOrder = -2;
             */
 
+            itemSlot_id = S_ID;
+            item_id = S_ID;
 
             //narazie wy³¹czone ¿eby nie dodawa³o do bazy
-            dbConnector.Insert($"Insert INTO all_eq(item_id,slot_id) VALUES({ID} , {S_ID})");
+            
         }
+       dbConnector.Insert($"Insert INTO all_eq(item_id,slot_id) VALUES({item_id} , {itemSlot_id})");
         return (item);
     }
 

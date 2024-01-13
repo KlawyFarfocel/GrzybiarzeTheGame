@@ -131,6 +131,8 @@ public class LevelManager : MonoBehaviour
                     level++;
                     currentClicks = 0;
                     GameObject.Find("LoadingScreen").GetComponent<Animation>().Play();
+                    Player player = GetComponent<Player>();
+                    player.CURRENT_HP = player.HP;
                     GameObject.Find("SectionText").GetComponent<TextMeshProUGUI>().text = $"Poziom:<br>{currentClicks}/{clicksTarget}";
                     StartCoroutine(LoadSceneWithAnimation());
             }

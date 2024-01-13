@@ -712,6 +712,7 @@ GameObject:
   m_Component:
   - component: {fileID: 337500421}
   - component: {fileID: 337500422}
+  - component: {fileID: 337500423}
   m_Layer: 5
   m_Name: LasStart
   m_TagString: Untagged
@@ -757,6 +758,18 @@ Animation:
   m_PlayAutomatically: 0
   m_AnimatePhysics: 0
   m_CullingType: 0
+--- !u!114 &337500423
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 337500420}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 935e6dd4aaac89141be3f0d67ed90f01, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &422573741
 GameObject:
   m_ObjectHideFlags: 0
@@ -2200,6 +2213,7 @@ GameObject:
   - component: {fileID: 1157257836}
   - component: {fileID: 1157257837}
   - component: {fileID: 1157257838}
+  - component: {fileID: 1157257839}
   m_Layer: 5
   m_Name: Gibraltar
   m_TagString: Untagged
@@ -2246,6 +2260,18 @@ Animation:
   m_AnimatePhysics: 0
   m_CullingType: 0
 --- !u!114 &1157257838
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1157257835}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 935e6dd4aaac89141be3f0d67ed90f01, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1157257839
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -2366,6 +2392,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1751127264}
   - component: {fileID: 1751127265}
+  - component: {fileID: 1751127266}
   m_Layer: 5
   m_Name: Rumunia
   m_TagString: Untagged
@@ -2411,6 +2438,18 @@ Animation:
   m_PlayAutomatically: 0
   m_AnimatePhysics: 0
   m_CullingType: 0
+--- !u!114 &1751127266
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1751127263}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 935e6dd4aaac89141be3f0d67ed90f01, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1847904541
 GameObject:
   m_ObjectHideFlags: 0
@@ -2421,6 +2460,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1847904542}
   - component: {fileID: 1847904543}
+  - component: {fileID: 1847904544}
   m_Layer: 5
   m_Name: Gotlandia
   m_TagString: Untagged
@@ -2466,6 +2506,18 @@ Animation:
   m_PlayAutomatically: 0
   m_AnimatePhysics: 0
   m_CullingType: 0
+--- !u!114 &1847904544
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1847904541}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 935e6dd4aaac89141be3f0d67ed90f01, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1886183195
 GameObject:
   m_ObjectHideFlags: 0

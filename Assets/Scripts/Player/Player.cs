@@ -49,10 +49,9 @@ public class Player : MonoBehaviour
         float hpPercentage = (float)CURRENT_HP / HP;
         hpPercentage = (float)Math.Round(hpPercentage, 2);
         HPCurrent.flexibleWidth = hpPercentage;
-
+        UnityEngine.UI.Image HPCurrentBar = GameObject.Find("HPCurrent").GetComponent<UnityEngine.UI.Image>();
         if (hpPercentage < 0.5)
         {
-            UnityEngine.UI.Image HPCurrentBar = GameObject.Find("HPCurrent").GetComponent<UnityEngine.UI.Image>();
             if (hpPercentage > 0.25)
             {
                 HPCurrentBar.color = UnityEngine.ColorUtility.TryParseHtmlString("#FF6E00", out Color parsedColor) ? parsedColor : Color.white;
@@ -62,6 +61,10 @@ public class Player : MonoBehaviour
                 HPCurrentBar.color = UnityEngine.ColorUtility.TryParseHtmlString("#8B0000", out Color parsedColor) ? parsedColor : Color.white;
             }
 
+        }
+        else
+        {
+            HPCurrentBar.color = UnityEngine.ColorUtility.TryParseHtmlString("#14A100", out Color parsedColor) ? parsedColor : Color.white;
         }
 
         LayoutElement HPLeft = GameObject.Find("HpLeft").GetComponent<LayoutElement>();
