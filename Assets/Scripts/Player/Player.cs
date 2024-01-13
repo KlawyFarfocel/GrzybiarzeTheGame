@@ -113,11 +113,17 @@ public class Player : MonoBehaviour
     }
     public void AddStats(eqItem item)
     {
-        if (item.armor != 0 ) { this.ARMOR += item.armor; }
+        if (item.armor != 0) { this.ARMOR += item.armor; }
         if (item.mod_1 != 0) { this.VIT += item.mod_1_val; }
         if (item.mod_2 != 0) { this.DEX += item.mod_2_val; }
         if (item.mod_3 != 0) { this.STR += item.mod_3_val; }
         if (item.mod_4 != 0) { this.LUCK += item.mod_4_val; }
+
+        try
+        {
+            GameObject.Find("Main").GetComponent<Load>().EvaluateHPPoints();
+        }
+        catch { }
     }
     public void RemoveStats(eqItem item)
     {
@@ -126,5 +132,12 @@ public class Player : MonoBehaviour
         if (item.mod_2 != 0) { this.DEX -= item.mod_2_val; }
         if (item.mod_3 != 0) { this.STR -= item.mod_3_val; }
         if (item.mod_4 != 0) { this.LUCK -= item.mod_4_val; }
-    } 
+
+
+        try
+        {
+            GameObject.Find("Main").GetComponent<Load>().EvaluateHPPoints();
+        }
+        catch { }
+    }
 }

@@ -110,16 +110,19 @@ public class EnemyClick : MonoBehaviour
         if (rollEffect == "FAIL") //miss - nie trafiles i chuj //enemy cie uderza tak czy siak
         {
             playerdata.HandleHealthLoss(enemyData.Damage); // to odejnuje graczowi hp, do obarniecia
+            Debug.Log(enemyData.HP -= (int)(playerdata.STR * (rollResult + 2) / 10));
         }
         else
         {
             if (rollResult == 20)//kryt
             {
                 enemyData.HP -= (int)(playerdata.STR * (rollResult+2)/10); // do zmiany pewnie //wyjebac 150 bo bylo do testowania
+                Debug.Log(enemyData.HP -= (int)(playerdata.STR * (rollResult + 2) / 10));
             }
             else
             { //normalny hit
                 enemyData.HP -= (int)(playerdata.STR * rollResult / 10); //wyjebac 150 bo bylo do testowania
+                Debug.Log(enemyData.HP -= (int)(playerdata.STR * (rollResult) / 10));
             }
             if(enemyData.HP > 1)
             playerdata.HandleHealthLoss((int)((double)enemyData.Damage*zmienna)); // to odejnuje graczowi hp, do obarniecia

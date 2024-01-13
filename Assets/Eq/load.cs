@@ -77,7 +77,7 @@ public class Load : MonoBehaviour
         int playerHP = playerData.CURRENT_HP;
         if(playerHP>maxHP) playerData.CURRENT_HP = maxHP;
         float percentage = (float)Math.Round((playerHP / (float)maxHP), 2);
-
+        playerData.HP = maxHP;
         GameObject.Find("CurrentHp").GetComponent<LayoutElement>().flexibleWidth = percentage;
         GameObject.Find("MaxHp").GetComponent<LayoutElement>().flexibleWidth = 1 - percentage;
         textmeshpro_text_text.text = $"HP: {playerHP}/{maxHP} ({percentage * 100}%)";
