@@ -141,6 +141,14 @@ public class EnemyClick : MonoBehaviour
 
         if (playerdata.CURRENT_HP <= 0)
         {
+            int level = GameObject.Find("LevelManager").GetComponent<LevelManager>().level;
+            if (level == 5)
+            {
+                DialogueManager dManager=GameObject.Find("DialogueManager").GetComponent<DialogueManager>();
+                dManager.ToggleDialoguePanel(true);
+                dManager.FindDialogue("end");
+                return;
+            }
             GameObject.Find("DeathScreen").GetComponent<Animation>().Play();
 
             IEnumerator changeSceneCoroutine = changeSceneAfterTime(enemy);

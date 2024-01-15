@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Data;
@@ -100,12 +101,32 @@ public class DialogueManager : MonoBehaviour
         }
         
     }
+    IEnumerator goToNextLineAfterTime(float seconds,string param)
+    {
+        yield return new WaitForSeconds(seconds);
+        if (param == "nextLine")
+        {
+            GoToNextLine();
+        }
+        else
+        {
+            ToggleDialoguePanel(true);
+            FindDialogue(param);
+        }
+        
+    }
     public void GoToNextLine()
     {
         seq_number++;
         if(seq_number<portaitSpriteList.Count)
         {
             HandleDialogueChange(portaitSpriteList[seq_number], dialogueTextList[seq_number], talkingPersonList[seq_number]);
+            if (dialogueTextList[seq_number] == "Nigdy Ci nie wybaczê, nigdy! <umiera>")
+            {
+                GameObject.Find("DeathScreenEnd").GetComponent<Animation>().Play();
+                StartCoroutine(goToNextLineAfterTime(0.5f,"nextLine"));
+                StartCoroutine(goToNextLineAfterTime(3.5f, "end2"));    
+            }
         }
         else
         {

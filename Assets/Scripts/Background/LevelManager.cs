@@ -15,6 +15,7 @@ public class LevelManager : MonoBehaviour
         public int currentClicks;
         public int clicksTarget;
         public bool wasOnMap;
+        public bool hasSpawnedBoss = false;
          private BackgroundManager bgManager;
     public SpawnEnemy spawnEnemy;
     // Start is called before the first frame update
@@ -38,7 +39,7 @@ public class LevelManager : MonoBehaviour
     }
     private void BackFromMap(Scene scene, LoadSceneMode mode)
     {
-        if (wasOnMap)
+/*        if (wasOnMap)
         {
             DialogueManager dialogueManager = GameObject.Find("DialogueManager").GetComponent<DialogueManager>();
             dialogueManager.ToggleDialoguePanel(true);
@@ -49,7 +50,7 @@ public class LevelManager : MonoBehaviour
             spawnEnemy = GameObject.Find("EnemySpawner").GetComponent<SpawnEnemy>();
             spawnEnemy.TrySpawnEnemy(level + 1);
             wasOnMap = false;
-        }
+        }*/
     }
     private void OnEnable()
     {
@@ -125,17 +126,36 @@ public class LevelManager : MonoBehaviour
                         
                     }
                 }
+                else if(currentClicks == clicksTarget)
+            {
+                if(!hasSpawnedBoss)
+                {
+                    DialogueManager dialogueManager = GameObject.Find("DialogueManager").GetComponent<DialogueManager>();
+                    dialogueManager.ToggleDialoguePanel(true);
+                    dialogueManager.FindDialogue("b" + (level + 1));
+
+                    spawnEnemy = GameObject.Find("EnemySpawner").GetComponent<SpawnEnemy>();
+                    spawnEnemy.TrySpawnEnemy(level + 2);
+
+                    hasSpawnedBoss = true;
+                }
                 else
                 {
-                    bgManager = GameObject.Find("Background").GetComponent<BackgroundManager>();
-                    level++;
-                    currentClicks = 0;
-                    GameObject.Find("LoadingScreen").GetComponent<Animation>().Play();
-                    Player player = GetComponent<Player>();
-                    player.CURRENT_HP = player.HP;
-                    GameObject.Find("SectionText").GetComponent<TextMeshProUGUI>().text = $"Poziom:<br>{currentClicks}/{clicksTarget}";
-                    StartCoroutine(LoadSceneWithAnimation());
+                    currentClicks++;
+                }
             }
-            }     
+            if (currentClicks > clicksTarget)
+            {
+                hasSpawnedBoss = false;
+                bgManager = GameObject.Find("Background").GetComponent<BackgroundManager>();
+                level++;
+                currentClicks = 0;
+                GameObject.Find("LoadingScreen").GetComponent<Animation>().Play();
+                Player player = GetComponent<Player>();
+                player.CURRENT_HP = player.HP;
+                GameObject.Find("SectionText").GetComponent<TextMeshProUGUI>().text = $"Poziom:<br>{currentClicks}/{clicksTarget}";
+                StartCoroutine(LoadSceneWithAnimation());
+            }
+        }     
     }
     }
