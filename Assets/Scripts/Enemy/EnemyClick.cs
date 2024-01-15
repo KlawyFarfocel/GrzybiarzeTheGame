@@ -136,6 +136,7 @@ public class EnemyClick : MonoBehaviour
         Debug.Log("enemy str " + playerdata.ARMOR);
         Debug.Log("player hp " + playerdata.HP);
         Debug.Log(zmienna);
+        int gold = enemyData.Damage*2; // gold z moba
 
 
 
@@ -167,7 +168,6 @@ public class EnemyClick : MonoBehaviour
             else
             {
                 //gold po pokananiu moba
-                int gold = 40; // gold z moba
                 dbConnector = GameObject.Find("DialogueManager").GetComponent<DBConnector>();
                 string updateQuery = $"UPDATE postac SET money = money+{gold}";
                 dbConnector.UpdateDB(updateQuery);
