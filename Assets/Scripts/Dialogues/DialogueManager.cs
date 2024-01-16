@@ -127,6 +127,11 @@ public class DialogueManager : MonoBehaviour
                 StartCoroutine(goToNextLineAfterTime(0.5f,"nextLine"));
                 StartCoroutine(goToNextLineAfterTime(3.5f, "end2"));    
             }
+            else if(dialogueTextList[seq_number] == "Ale to ju¿ historia na inny raz.")
+            {
+                GameObject.Find("CreditsText").GetComponent<Animation>().Play();
+                StartCoroutine(goToNextLineAfterTime(1f, "nextLine"));
+            }
         }
         else
         {

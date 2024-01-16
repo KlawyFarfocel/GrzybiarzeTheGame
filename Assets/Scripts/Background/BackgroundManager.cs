@@ -44,7 +44,9 @@ public class BackgroundManager : MonoBehaviour
             Vector3 newPosition = new Vector3(posX, posY, -250);
             Vector3 newScale = new Vector3(scaleX, scaleY, -250);
             background.GetComponent<Transform>().localPosition = newPosition;
-            background.GetComponent<Transform>().localScale = newScale;            
+            background.GetComponent<Transform>().localScale = newScale; 
+            GameObject.Find("LevelText").GetComponent<TextMeshProUGUI>().text = "Etap: <br>"+levelText;
+            GameObject.Find("LevelIcon").GetComponent<Image>().sprite = BGSprite;
         }
         IDataReader SelectClicks = dbCon.Select($"SELECT click_count FROM spot WHERE spot_id = {level}");
         while (SelectClicks.Read())

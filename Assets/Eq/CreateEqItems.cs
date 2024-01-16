@@ -40,8 +40,8 @@ public class CreateEqItems : MonoBehaviour
         int ItemCount = Int32.Parse(Count);
 
         //pobranie z bazy itemu o losowym id
-        int RandomIndex = UnityEngine.Random.Range(0, ItemCount);
-
+        int RandomIndex = UnityEngine.Random.Range(1, ItemCount);
+        Debug.Log(RandomIndex);
         eqItem item = new eqItem();
         IDataReader createItem = dbConnector.Select($"SELECT * FROM eq WHERE eq_id = {RandomIndex}");
         int itemSlot_id=0;
@@ -113,7 +113,7 @@ public class CreateEqItems : MonoBehaviour
             */
 
             itemSlot_id = S_ID;
-            item_id = S_ID;
+            item_id = ID;
 
             //narazie wy³¹czone ¿eby nie dodawa³o do bazy
             

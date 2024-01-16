@@ -75,6 +75,7 @@ public class eqManager : MonoBehaviour
             {
                 allCollectedItemsIdOfType.Add(int.Parse(getAllItemsIdOfSlot[1].ToString()));
             }
+            Debug.Log(allCollectedItemsIdOfType[0]);
             itemsMenuPopup.SetActive(true);
             foreach (int item in allCollectedItemsIdOfType)//Tworzenie slotów
             {
@@ -82,7 +83,6 @@ public class eqManager : MonoBehaviour
                 GameObject slotPrefab = Resources.Load<GameObject>("Prefabs/Slot");
 
                 GameObject createdSlot = Instantiate(slotPrefab);
-
                 Variables.Object(createdSlot).Set("item_id", eqItem.eq_id);
 
                 createdSlot.transform.SetParent(GameObject.Find("Row").transform, true);
@@ -201,7 +201,10 @@ public class eqManager : MonoBehaviour
     void Start()
     {
         playerData = GameObject.Find("LevelManager").GetComponent<Player>();
-
+        for(int i = 0; i < 8; i++)
+        {
+            equippedItemsIdList.Add(-1);
+        }
         dbCon = GameObject.Find("EqSlots").GetComponent<DBConnector>();
         IDataReader getAllItemsNames = dbCon.Select("SELECT name FROM eq");
         while (getAllItemsNames.Read())
@@ -218,6 +221,7 @@ public class eqManager : MonoBehaviour
             );//dodaj id itemów do listy
         }
         string collectedItemsDataQuery = generateINQuery("SELECT * FROM eq WHERE eq_id", allCollectedItemsIdList);
+        Debug.Log(collectedItemsDataQuery);
         IDataReader getAllCollectedItemsData = dbCon.Select(collectedItemsDataQuery);
         while (getAllCollectedItemsData.Read())
         {
@@ -225,9 +229,17 @@ public class eqManager : MonoBehaviour
             eqItem.eq_id = Int32.Parse(getAllCollectedItemsData[0].ToString());
             eqItem.slot_id= Int32.Parse(getAllCollectedItemsData[1].ToString());
             eqItem.armor= Int32.Parse(getAllCollectedItemsData[2].ToString());
+            if (getAllCollectedItemsData[3] != DBNull.Value)
+            {
+                eqItem.mod_1 = Int32.Parse(getAllCollectedItemsData[3].ToString());
+                eqItem.mod_1_val = Int32.Parse(getAllCollectedItemsData[4].ToString());
+            }
+            else
+            {
+                eqItem.mod_1 = 0;
+                eqItem.mod_1_val = 0;
+            }
 
-            eqItem.mod_1= Int32.Parse(getAllCollectedItemsData[3].ToString());
-            eqItem.mod_1_val = Int32.Parse(getAllCollectedItemsData[4].ToString());
 
             if (getAllCollectedItemsData[5]!=DBNull.Value)
             {

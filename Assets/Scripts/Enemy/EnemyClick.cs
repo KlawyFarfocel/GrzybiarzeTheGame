@@ -73,6 +73,8 @@ public class EnemyClick : MonoBehaviour
         levelManager.currentClicks = 0;
         player.CURRENT_HP = player.HP;
         player.HandleUIChange();
+        levelManager.hasSpawnedBoss = false;
+        GameObject.Find("SectionText").GetComponent<TextMeshProUGUI>().text = $"Poziom:<br>{levelManager.currentClicks}/{levelManager.clicksTarget}";
         bgManager.changeValues(levelManager.level);
         Destroy(enemy);
     }
@@ -151,6 +153,7 @@ public class EnemyClick : MonoBehaviour
             }
             GameObject.Find("DeathScreen").GetComponent<Animation>().Play();
 
+            
             IEnumerator changeSceneCoroutine = changeSceneAfterTime(enemy);
             StartCoroutine(changeSceneCoroutine);
         }
@@ -167,7 +170,7 @@ public class EnemyClick : MonoBehaviour
             else
             {
                 //gold po pokananiu moba
-                int gold = 40; // gold z moba
+                int gold = enemyData.Damage*2; // gold z moba
                 dbConnector = GameObject.Find("DialogueManager").GetComponent<DBConnector>();
                 string updateQuery = $"UPDATE postac SET money = money+{gold}";
                 dbConnector.UpdateDB(updateQuery);
